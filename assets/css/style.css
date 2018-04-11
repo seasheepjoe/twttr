@@ -1,0 +1,11 @@
+#header {
+    margin: 20px 0;
+}
+
+#header img {
+    width: 35%;
+}
+
+.btn-round-lg{
+    border-radius: 22.5px;
+}
