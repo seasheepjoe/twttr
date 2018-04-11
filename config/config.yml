@@ -1,8 +1,8 @@
 homepage_route: "home"
 profile: "/profile\\/[a-zA-Z]+/"
 routes:
-    home: "Main:home"
-    login: "Main:login"
-    register: "Main:register"
-    profile: "User:profile"
-    
+    home:       "Main:home"
+    register:   "Main:register"
+    login:      "Main:login"
+    logout:     "Main:logout"
+    profile:    "Main:profile" 

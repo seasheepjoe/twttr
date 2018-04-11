@@ -1,0 +1,30 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}Twttr | Login{% endblock %}
+
+{% block content %}
+<form action="/login" method="POST">
+    <fieldset>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-3">
+                <legend>Login</legend>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-3">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-3">
+                <label for="username">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <button type="submit" class="btn btn-primary">Sign in</button>
+        </div>
+    </fieldset>
+</form>
+{% endblock %}
