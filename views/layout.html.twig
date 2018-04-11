@@ -6,6 +6,17 @@
     <link rel="stylesheet" href="assets/style.css">
   </head>
   <body>
-    {% block content %}{% endblock %}
+
+    {% block nav %}
+      <a href="?action=logout">logout</a>
+       <a href="?action=home">home</a>
+        <a href="?action=login">login</a>
+         <a href="?action=register">register</a>
+    {% endblock %}
+    {% if user_data.user is defined %}
+      <h1>Hello, {{ user_data.user.name }}</h1>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
   </body>
 </html>

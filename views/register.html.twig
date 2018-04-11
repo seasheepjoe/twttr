@@ -1,0 +1,21 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}Twttr | Register{% endblock %}
+
+{% block content %}
+<h1> REGISTER </h1>
+
+<form method="post" name="register-form">
+    <label>Username</label><br>
+    <input type="text" name="username"><br><br>
+    <label>Email</label><br>
+    <input type="email" name="email"><br><br>
+    <label>Birthdate</label><br>
+    <input type="date" name="birthdate"><br><br>
+    <label>Password</label><br>
+    <input type="password" name="password"><br><br>
+    <label>Repeat password</label><br>
+    <input type="password" name="password-repeat">
+    <button type="submit" name="register-btn">Register</button>
+</form>
+{% endblock %}

@@ -1,3 +1,6 @@
 homepage_route: "home"
 routes:
-    home: "Main:home"
+    home:       "Main:home"
+    register :  "Main:register"
+    login:      "Main:login"
+    logout:     "Main:logout"

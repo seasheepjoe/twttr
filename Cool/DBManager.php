@@ -16,7 +16,7 @@ class DBManager
         $dsn = 'mysql:dbname='.$params['db']['name'].';host='.$address;
         $user = $params['db']['user'];
         $password = $params['db']['password'];
-        $pdo = new PDO($dsn, $user, $password);
+        $pdo = new \PDO($dsn, $user, $password);
         $this->setPdo($pdo);
     }
     
