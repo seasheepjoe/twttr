@@ -71,7 +71,7 @@ class UsersManager {
             return $errors;
         }else {
             if (password_verify($password, $data['password'])) {
-                $_SESSION['user'] = $data;
+                $_SESSION = $data;
                 $id = $data['id'];
                 $update_last_login = $pdo->query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = '" . $id . "'");
                 header('Location: /');

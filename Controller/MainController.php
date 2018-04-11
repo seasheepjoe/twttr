@@ -9,17 +9,14 @@ class MainController extends BaseController
 {
     public function homeAction()
     {
-
-        session_start();
         $data = [
-            'user_data' => $_SESSION,
+            'user' => $_SESSION,
         ];
         return $this->render('home.html.twig', $data);
     }
 
     public function registerAction() 
     {
-        session_start();
         if (isset($_SESSION['is_user_on'])) {
             header('Location: ?action=home');
             exit();
@@ -46,14 +43,11 @@ class MainController extends BaseController
 
     public function loginAction()
     {
-        session_start();
-        if (isset($_SESSION['is_user_on'])) {
-            header('Location: ?action=home');
+        if (isset($_SESSION['name'])) {
+            header('Location: /');
             exit();
-        }else {
+        } else {
             $data = [];
-            $email = ' ';
-            $password = ' ';
             if (isset($_POST['email']) && isset($_POST['password'])) {
                 $email = htmlentities($_POST['email']);
                 $password = htmlentities($_POST['password']);
@@ -69,15 +63,13 @@ class MainController extends BaseController
 
     public function logoutAction() 
     {
-        session_start();
         session_destroy();
-        header('Location: ?action=login');
+        header('Location: /');
         exit();
     }
 
     public function profileAction()
     {
-        session_start();
         if (!isset($_SESSION['is_user_on'])) {
             header('Location: ?action=home');
             exit();

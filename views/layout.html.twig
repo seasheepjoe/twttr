@@ -19,8 +19,13 @@
           <a href="/"><img src="/assets/img/twttr.png" alt="Twttr logo"></a>
         </div>
         <div class="col-md-2 offset-md-2 d-flex justify-content-around">
+          {% if user.name is not defined %}
           <a href="/login" class="btn btn-light btn-round-lg">Connexion</a>
           <a href="/register" class="btn btn-primary btn-round-lg">Inscription</a>
+          {% else %}
+          <a href="/{{ user.name }}" class="btn btn-light btn-round-lg">{{ user.name }}</a>
+          <a href="/logout" class="btn btn-primary btn-round-lg">Logout</a>
+          {% endif %}
         </div>
       </div>
     </div>

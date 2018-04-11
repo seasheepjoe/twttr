@@ -8,6 +8,8 @@ use Routing\Router;
 $config = Yaml::parseFile('config/config.yml');
 $params = Yaml::parseFile('config/parameters.yml');
 
+session_start();
+
 $loader = new Twig_Loader_Filesystem('views');
 $twig = new Twig_Environment($loader, array(
     //'cache' => 'cache/twig',

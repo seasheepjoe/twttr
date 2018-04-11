@@ -3,5 +3,7 @@
 {% block page_title %}Twttr | Home{% endblock %}
 
 {% block content %}
-<h1>HOME</h1>
+{% if user.name is defined %}
+Logged in as {{ user.name }}
+{% endif %}
 {% endblock %}
