@@ -21,6 +21,7 @@ $request = substr($_SERVER['REQUEST_URI'], 1);
 if ($request == '') {
     $request = 'home';
 }
+
 $router = new Router();
 
 $response = $router->execute($request);
