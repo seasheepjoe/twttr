@@ -76,4 +76,18 @@ class MainController extends BaseController
         header('Location: ?action=login');
         exit();
     }
+
+    public function profileAction()
+    {
+        session_start();
+        if (!isset($_SESSION['is_user_on'])) {
+            header('Location: ?action=home');
+            exit();
+        } else {
+            $data = [
+                'user_data'    => $_SESSION,
+            ];
+        }
+        return $this->render('profile.html.twig', $data);
+    }
 }
