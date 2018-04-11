@@ -14,7 +14,7 @@ $twig = new Twig_Environment($loader, array(
     'cache' => false,
 ));
 
-$request = empty($_GET['action']) ? $config['homepage_route'] : $_GET['action'];
+$request = substr($_SERVER['REQUEST_URI'], 1);
 $router = new Router();
 $response = $router->execute($request);
 echo $response;
