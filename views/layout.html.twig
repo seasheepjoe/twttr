@@ -8,11 +8,11 @@
   <body>
 
     {% block nav %}
-      <a href="?action=logout">logout</a>
-       <a href="?action=home">home</a>
-        <a href="?action=login">login</a>
-         <a href="?action=register">register</a>
-         <a href="?action=profile">profile</a>
+      <a href="logout">logout</a>
+       <a href="home">home</a>
+        <a href="login">login</a>
+         <a href="register">register</a>
+         <a href="profile">profile</a>
     {% endblock %}
     {% if user_data.user is defined %}
       <h1>Hello, {{ user_data.user.name }}</h1>

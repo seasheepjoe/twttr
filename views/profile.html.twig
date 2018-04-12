@@ -5,10 +5,10 @@
 {% block content %}
 <h1> PROFILE </h1>
 
-<form method="post" name="update-pic-form">
+<form method="post" name="update-pic-form" enctype="multipart/form-data">
     <label>Choose a picture</label><br>
-    <input type="file" name="pic"><br><br>
-    <button type="submit" name="login-btn">Register</button>
+    <input type="file" name="file"><br><br>
+    <button type="submit" name="upload-btn">Upload</button>
 </form>
 {% if user_data.user is defined %}
     {% block profile %}
