@@ -21,7 +21,7 @@ class MainController extends BaseController
     {
         session_start();
         if (isset($_SESSION['is_user_on'])) {
-            header('Location: ?action=home');
+            header('Location: /home');
             exit();
         } else {
             $data = [];
@@ -50,7 +50,7 @@ class MainController extends BaseController
     {
         session_start();
         if (isset($_SESSION['is_user_on'])) {
-            header('Location: ?action=home');
+            header('Location: /home');
             exit();
         }else {
             $data = [];
@@ -73,7 +73,7 @@ class MainController extends BaseController
     {
         session_start();
         session_destroy();
-        header('Location: ?action=login');
+        header('Location: /login');
         exit();
     }
 
@@ -81,9 +81,16 @@ class MainController extends BaseController
     {
         session_start();
         if (!isset($_SESSION['is_user_on'])) {
-            header('Location: ?action=home');
+
+            header('Location: /home');
             exit();
+
         } else {
+
+            if (isset($_FILES['file'])) {
+                $name = $_FILES['file']['name'];
+            }
+
             $data = [
                 'user_data'    => $_SESSION,
             ];

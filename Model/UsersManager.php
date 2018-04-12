@@ -50,7 +50,7 @@ class UsersManager {
         if ($sendForm === true) {
             $request->execute();
             self::login($email, $password);
-            header('Location: ?action=home');
+            header('Location: /home');
             exit();
         }else {
             return $errors;
@@ -67,13 +67,13 @@ class UsersManager {
         if (empty($data)) {
             $errors['error'] = 'Invalid email or password';
             return $errors;
-        }else {
+        } else {
             if (password_verify($password, $data['password'])) {
                 $_SESSION['user'] = $data;
                 $_SESSION['is_user_on'] = 'on';
                 $id = $data['id'];
                 $update_last_login = $pdo->query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = '" . $id . "'");
-                header('Location: ?action=home');
+                header('Location: /home');
                 exit();
             } else {
                 $errors['error'] = 'Invalid email or password';
