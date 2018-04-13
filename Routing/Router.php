@@ -32,7 +32,14 @@ class Router
         else
         {
             header("HTTP/1.0 404 Not Found");
-            exit();
+            http_response_code(404);
+            $data = explode(':', $config['routes']['error404']);
+            $controller_name = "Controller\\".'MainController';
+            $method_name = 'error404Action';
+            
+            $controller = new $controller_name;
+            $response = call_user_func([$controller, $method_name]);
+            return $response;
         }
     }
 }

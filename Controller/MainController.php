@@ -80,4 +80,13 @@ class MainController extends BaseController
         }
         return $this->render('profile.html.twig', $data);
     }
+
+    public function error404Action()
+    {
+        $data = [
+            'request' => substr($_SERVER['REQUEST_URI'], 1)
+        ];
+        
+        return $this->render('404.html.twig', $data);
+    }
 }
