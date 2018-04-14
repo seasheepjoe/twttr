@@ -2,3 +2,4 @@
 /vendor
 composer.phar
 /config/parameters.yml
+.DS_Store
