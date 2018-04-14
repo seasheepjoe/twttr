@@ -14,9 +14,44 @@
   <main>
     <div class="container-fluid" id="header">
       <div class="row align-items-center">
-        <div class="col-md-5"></div>
+        <div class="col-md-5 text-center">
+          {% if user.name is defined %}
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary btn-round-lg pl-3 pr-3" data-toggle="modal" data-target="#exampleModalCenter">
+            New Twtt
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <form action="/newTwtt" method="POST">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">New Twtt</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                  <div class="media">
+                    <img src="/assets/img/PP-Pro.jpg" alt="PP-Pro" class="align-self-start twtt-thumbnail mr-3 ml-3">
+                    <div class="media-body">
+                      <textarea class="form-control" name="twtt-content" placeholder="What's up" rows="5"></textarea>
+                    </div>
+                  </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Tweet !</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
         <div class="col-md-2 text-center">
-          <a href="/"><img src="/assets/img/twttr.png" alt="Twttr logo"></a>
+          <a href="/"><img src="/assets/img/twttr.png" id="logo" alt="Twttr logo"></a>
         </div>
         <div class="col-md-2 offset-md-2 d-flex justify-content-around">
           {% if user.name is not defined %}

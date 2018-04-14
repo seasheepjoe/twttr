@@ -2,10 +2,16 @@
     margin: 20px 0;
 }
 
-#header img {
+#header #logo {
     width: 35%;
 }
 
-.btn-round-lg{
+.btn-round-lg {
     border-radius: 22.5px;
+}
+
+.twtt-thumbnail {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
 }
