@@ -7,3 +7,4 @@ routes:
     login:      "Main:login"
     logout:     "Main:logout"
     profile:    "Main:profile" 
+    newTwtt: "Twtts:newTwtt"
