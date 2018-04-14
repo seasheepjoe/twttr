@@ -16,4 +16,13 @@ class TwttsManager
         $request->bindParam(':content', $content);
         $request->execute();
     }
+
+    public function getTwtts()
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        $request = $pdo->query("SELECT *, users.name AS author_name FROM twtts LEFT JOIN users ON users.id = twtts.author");
+        $twtts = $request->fetchAll();
+        return $twtts;
+    }
 }

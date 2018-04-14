@@ -3,7 +3,13 @@
 {% block page_title %}Twttr | Home{% endblock %}
 
 {% block content %}
-{% if user.name is defined %}
-Logged in as {{ user.name }}
-{% endif %}
+{% for twtt in twtts %}
+<div class="media">
+  <img class="align-self-start mr-3 twtt-thumbnail" src="/assets/pp/{{twtt.author}}.jpg" alt="Generic placeholder image">
+  <div class="media-body">
+    <h5 class="mt-0">{{ twtt.author_name }}</h5>
+    <p>{{ twtt.content }}</p>
+  </div>
+</div>
+{% endfor %}
 {% endblock %}
