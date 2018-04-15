@@ -47,7 +47,7 @@ class UsersManager {
             $sendForm = false;
         }
 
-        if ($username_taken['user'] === $username) {
+        if ($username_taken['name'] === $username) {
             $errors['username'] = 'This username is already taken';
             $sendForm = false;
         }
