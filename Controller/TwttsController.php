@@ -16,6 +16,8 @@ class TwttsController extends BaseController
         if (!empty($_POST['twtt-content'])) {
             $manager = new TwttsManager;
             $manager->setTwtt($_SESSION['id'], $_POST['twtt-content']);
+            header('Location: /home');
+            exit();
         }
     }
 }
