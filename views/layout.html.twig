@@ -34,7 +34,7 @@
                   </div>
                   <div class="modal-body">
                   <div class="media">
-                    <img src="/assets/img/PP-Pro.jpg" alt="PP-Pro" class="align-self-start twtt-thumbnail mr-3 ml-3">
+                    <img src="{{ user.pp_url }}" alt="PP-Pro" class="align-self-start twtt-thumbnail mr-3 ml-3">
                     <div class="media-body">
                       <textarea class="form-control" name="twtt-content" placeholder="What's up" rows="5"></textarea>
                     </div>
@@ -58,7 +58,7 @@
           <a href="/login" class="btn btn-light btn-round-lg">Connexion</a>
           <a href="/register" class="btn btn-primary btn-round-lg">Inscription</a>
           {% else %}
-          <a href="/{{ user.name }}" class="btn btn-light btn-round-lg">{{ user.name }}</a>
+          <a href="/profile" class="btn btn-light btn-round-lg">{{ user.name }}</a>
           <a href="/logout" class="btn btn-primary btn-round-lg">Logout</a>
           {% endif %}
         </div>
