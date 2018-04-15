@@ -5,18 +5,20 @@
 {% block content %}
 <h1> PROFILE </h1>
 
-<form method="post" name="update-pic-form">
+<form method="post" name="update-pic-form" enctype="multipart/form-data">
     <label>Choose a picture</label><br>
     <input type="file" name="pic"><br><br>
-    <button type="submit" name="login-btn">Register</button>
+    <button type="submit" name="change-pic-btn">Change pic</button>
 </form>
-{% if user_data.user is defined %}
+{% if user.name is defined %}
     {% block profile %}
-        <h2>{{ user_data.user.name }}</h2>
-        <h2>{{ user_data.user.email }}</h2>
-        <h2>{{ user_data.user.birthdate }}</h2>
-        {% if user_data.user.profile_pic_url is not empty %}
-            <img src="{{ user_data.user.profile_pic_url }}">
+        <h2>{{ user.name }}</h2>
+        <h2>{{ user.email }}</h2>
+        <h2>{{ user.birthdate }}</h2>
+        {% if user.pp_url is not empty %}
+            <img src="{{ user.pp_url }}">
+        {% else %}
+            <img src="../assets/pp/default_pp.png">
         {% endif %}
     {% endblock %}
 {% endif %}
