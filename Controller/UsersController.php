@@ -55,7 +55,7 @@ class UsersController extends BaseController
         session_destroy();
         header('Location: /');
         exit();
-    }
+    }   
 
     public function profileAction()
     {
@@ -63,6 +63,19 @@ class UsersController extends BaseController
             header('Location: /');
             exit();
         } else {
+            if (isset($_POST['change-pic-btn'])) {
+                $type = $_FILES['pic']['type'];
+                $size = $_FILES['pic']['size'];
+                $name = $_FILES['pic']['name'];
+                $tmp_name = $_FILES['pic']['tmp_name'];
+                $errors = [];
+                if($type !== 'image/png' && $type !== 'image/jpg' && $type !== 'image/jpeg') {
+                    $errors['type'] = 'You can only upload png/jpg/jpeg files';
+                } else {
+                    $change_pic = new UsersManager();
+                    $change_pic->changePic($name, $tmp_name, $type, $size);
+                }
+            }
             $data = [
                 'user' => $_SESSION,
             ];
