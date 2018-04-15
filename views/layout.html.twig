@@ -34,7 +34,11 @@
                   </div>
                   <div class="modal-body">
                   <div class="media">
+                  {% if user.pp_url is not empty %}
                     <img src="{{ user.pp_url }}" alt="PP-Pro" class="align-self-start twtt-thumbnail mr-3 ml-3">
+                  {% else %}
+                    <img src="../assets/pp/default_pp.png" alt="PP-Pro" class="align-self-start twtt-thumbnail mr-3 ml-3">
+                  {% endif %}
                     <div class="media-body">
                       <textarea class="form-control" name="twtt-content" placeholder="What's up" rows="5"></textarea>
                     </div>
