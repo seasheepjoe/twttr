@@ -6,7 +6,7 @@
 <div class="col-md-6 offset-md-3 mt-5" id="twtts">
     {% for twtt in twtts %}
     <div class="media p-4">
-        <img class="align-self-start mr-3 twtt-thumbnail" src="/assets/pp/{{twtt.author}}.jpg" alt="Generic placeholder image">
+        <img class="align-self-start mr-3 twtt-thumbnail" src="{{twtt.pp_url}}" alt="Generic placeholder image">
         <div class="media-body">
             <h5 class="mt-0">{{ twtt.author_name }}</h5>
             <p>{{ twtt.content }}</p>
