@@ -3,23 +3,30 @@
 {% block page_title %}Twttr | Profile{% endblock %}
 
 {% block content %}
-<h1> PROFILE </h1>
+<h1>PROFILE</h1>
 
-<form method="post" name="update-pic-form" enctype="multipart/form-data">
-    <label>Choose a picture</label><br>
-    <input type="file" name="pic"><br><br>
-    <button type="submit" name="change-pic-btn">Change pic</button>
+<form method="post" name="update-pic-form" enctype="multipart/form-data" class="mb-5">
+    <div class="form-group">
+        <label for="profilepic">Choose a picture</label>
+        <input type="file" class="form-control-file" name="pic" id="profilepic">
+        <button type="submit" name="change-pic-btn" class="btn btn-primary mt-2">Change pic</button>
+    </div>
 </form>
-{% if user.name is defined %}
-    {% block profile %}
-        <h2>{{ user.name }}</h2>
-        <h2>{{ user.email }}</h2>
-        <h2>{{ user.birthdate }}</h2>
+<div class="row">
+    <div class="col-2">
         {% if user.pp_url is not empty %}
-            <img src="{{ user.pp_url }}">
+        <img src="{{ user.pp_url }}" class="pp mr-3 ml-3">
         {% else %}
-            <img src="../assets/pp/default_pp.png">
+        <img src="../assets/pp/default_pp.png" class="pp mr-3 ml-3">
         {% endif %}
-    {% endblock %}
-{% endif %}
+    </div>
+    <div class="col-6 d-flex flex-column justify-content-center">
+        <h4>{{ user.name }}</h4>
+        <h4>{{ user.email }}</h4>
+    </div>
+    <div class="col-4 d-flex flex-column justify-content-center">
+        <h5>Following: </h5>
+        <h5>Followers: </h5>
+    </div>
+</div>
 {% endblock %}

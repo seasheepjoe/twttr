@@ -16,6 +16,12 @@
     border-radius: 100%;
 }
 
+.pp {
+    width: 90px;
+    height: 90px;
+    border-radius: 100%;
+}
+
 #twtts {
     border-collapse: collapse;
     box-sizing: border-box;
@@ -24,6 +30,13 @@
 #twtts .media {
     border: solid 1px black;
     border-radius: 3px;
+}
+
+.media-body h5 span {
+    font-size: .6rem;
+    color: grey;
+    display: flex;
+    align-items: center;
 }
 
 #twtts .media:hover {
