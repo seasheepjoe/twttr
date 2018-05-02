@@ -85,7 +85,7 @@ class UsersManager {
     }
 
     public function changePic($name, $tmp_name, $type, $size) {
-        $url = './assets/pp/' . $_SESSION['id'] . '_pp.';
+        $url = '/assets/pp/' . $_SESSION['id'] . '_pp.';
         $new_pp =  $url . substr($type, 6);
         if (is_uploaded_file($tmp_name)){
             $dbManager = DBManager::getInstance();
@@ -110,6 +110,7 @@ class UsersManager {
             $errors['upload'] = 'Error uploading file please retry';
         }
     }
+
     public function follow($follower, $followed)
     {
         $dbManager = DBManager::getInstance();
@@ -119,5 +120,12 @@ class UsersManager {
         $request->bindParam(':follower', $follower);
         $request->bindParam(':followed', $followed);
         $request->execute();
+    }
+
+    public function getUserInfo($user)
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        return $pdo->query("SELECT * FROM `users` WHERE `users`.`name` = '$user'")->fetch(\PDO::FETCH_ASSOC);
     }
 }
