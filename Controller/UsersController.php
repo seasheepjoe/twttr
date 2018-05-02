@@ -92,9 +92,11 @@ class UsersController extends BaseController
     {
         $regex = '/profile\/([a-zA-Z]+)/';
         preg_match($regex, $_SERVER['REQUEST_URI'], $matches);
-        $userProfile = $matches[1];
+        $username = $matches[1];
         $manager = new UsersManager;
-        $userData = $manager->getUserInfo($userProfile);
+        $userData = $manager->getUserInfo($username);
+        $userData['followings'] = $manager->getUserFollowings($userData['id']);
+        $userData['followers'] = $manager->getUserFollowers($userData['id']);
         $data = [
             'user'        => $_SESSION,
             'userProfile' => $userData

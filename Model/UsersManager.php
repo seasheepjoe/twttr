@@ -128,4 +128,18 @@ class UsersManager {
         $pdo = $dbManager->getPdo();
         return $pdo->query("SELECT * FROM `users` WHERE `users`.`name` = '$user'")->fetch(\PDO::FETCH_ASSOC);
     }
+
+    public function getUserFollowers($user)
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        return $pdo->query("SELECT COUNT(*) AS followers FROM follows WHERE follows.followed = '$user'")->fetch(\PDO::FETCH_ASSOC)['followers'];
+    }
+
+    public function getUserFollowings($user)
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        return $pdo->query("SELECT COUNT(*) AS followings FROM follows WHERE follows.follower = '$user'")->fetch(\PDO::FETCH_ASSOC)['followings'];
+    }
 }
