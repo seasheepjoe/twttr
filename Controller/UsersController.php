@@ -72,7 +72,7 @@ class UsersController extends BaseController
                 if($type !== 'image/png' && $type !== 'image/jpg' && $type !== 'image/jpeg') {
                     $errors['type'] = 'You can only upload png/jpg/jpeg files';
                 } else {
-                    $change_pic = new UsersManager();
+                    $change_pic = new UsersManager;
                     $change_pic->changePic($name, $tmp_name, $type, $size);
                 }
             }
@@ -84,8 +84,21 @@ class UsersController extends BaseController
     }
 
     public function followAction() {
-        $manager = new UsersManager();
+        $manager = new UsersManager;
         $manager->follow($_POST['follower'], $_POST['followed']);
-        die(var_dump('<pre>', $_POST));
+    }
+
+    public function userProfileAction()
+    {
+        $regex = '/profile\/([a-zA-Z]+)/';
+        preg_match($regex, $_SERVER['REQUEST_URI'], $matches);
+        $userProfile = $matches[1];
+        $manager = new UsersManager;
+        $userData = $manager->getUserInfo($userProfile);
+        $data = [
+            'user'        => $_SESSION,
+            'userProfile' => $userData
+        ];
+        return $this->render('userprofile.html.twig', $data);
     }
 }
