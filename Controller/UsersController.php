@@ -82,4 +82,10 @@ class UsersController extends BaseController
         }
         return $this->render('profile.html.twig', $data);
     }
+
+    public function followAction() {
+        $manager = new UsersManager();
+        $manager->follow($_POST['follower'], $_POST['followed']);
+        die(var_dump('<pre>', $_POST));
+    }
 }

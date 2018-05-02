@@ -110,4 +110,14 @@ class UsersManager {
             $errors['upload'] = 'Error uploading file please retry';
         }
     }
+    public function follow($follower, $followed)
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $request = $pdo->prepare("INSERT INTO `follows` (`id`, `follower`, `followed`) VALUES (NULL, :follower, :followed);");
+        $request->bindParam(':follower', $follower);
+        $request->bindParam(':followed', $followed);
+        $request->execute();
+    }
 }
