@@ -8,3 +8,4 @@ routes:
     logout:     "Users:logout"
     profile:    "Users:profile" 
     newTwtt: "Twtts:newTwtt"
+    follow: "Users:follow"

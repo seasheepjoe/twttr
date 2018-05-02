@@ -16,17 +16,68 @@
     border-radius: 100%;
 }
 
+.pp {
+    width: 90px;
+    height: 90px;
+    border-radius: 100%;
+}
+
 #twtts {
     border-collapse: collapse;
     box-sizing: border-box;
 }
 
-#twtts .media {
+#twtts td, #twtts th {
+    border: inherit;
     border: solid 1px black;
-    border-radius: 3px;
+    padding: inherit;
+}
+
+.media-body h5 span {
+    font-size: .6rem;
+    color: grey;
+    display: flex;
+    align-items: center;
 }
 
 #twtts .media:hover {
     background-color: #fBfBfB;
     cursor: pointer;
+}
+
+.actions {
+    width: 40%;
+}
+
+.actions a:hover {
+    text-decoration: none;
+}
+
+.img-wrapper {
+    position: relative;
+    height: 100%;
+}
+
+.img-wrapper img {
+    z-index: 5;
+}
+
+.img-wrapper img:hover {
+    filter: brightness(50%);
+    z-index: 0;
+    transition: all .3s ease;
+}
+
+.img-wrapper > * {
+    position: absolute;
+}
+
+.img-desc {
+    color: white;
+    z-index: 2;
+}
+
+h4 a {
+    font-size: .9rem;
+    color: grey;
 }

@@ -11,8 +11,8 @@ class Router
         if (preg_match($config['profile'], $request))
         {
             $data = explode(':', $config['routes']['profile']);
-            $controller_name = "Controller\\".'UserController';
-            $method_name = 'profileAction';
+            $controller_name = "Controller\\".'UsersController';
+            $method_name = 'userProfileAction';
             
             $controller = new $controller_name;
             $response = call_user_func([$controller, $method_name]);
