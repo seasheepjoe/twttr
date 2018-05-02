@@ -17,6 +17,7 @@ $twig = new Twig_Environment($loader, array(
 ));
 
 $request = substr($_SERVER['REQUEST_URI'], 1);
+$request = explode('?', $request)[0];
 
 if ($request == '') {
     $request = 'home';
