@@ -63,6 +63,7 @@ class UsersController extends BaseController
             header('Location: /');
             exit();
         } else {
+            $manager = new UsersManager;
             if (isset($_POST['change-pic-btn'])) {
                 $type = $_FILES['pic']['type'];
                 $size = $_FILES['pic']['size'];
@@ -72,10 +73,12 @@ class UsersController extends BaseController
                 if($type !== 'image/png' && $type !== 'image/jpg' && $type !== 'image/jpeg') {
                     $errors['type'] = 'You can only upload png/jpg/jpeg files';
                 } else {
-                    $change_pic = new UsersManager;
-                    $change_pic->changePic($name, $tmp_name, $type, $size);
+                    $manager = new UsersManager;
+                    $manager->changePic($name, $tmp_name, $type, $size);
                 }
             }
+            $_SESSION['followings'] = $manager->getUserFollowings($_SESSION['id']);
+            $_SESSION['followers'] = $manager->getUserFollowers($_SESSION['id']);
             $data = [
                 'user' => $_SESSION,
             ];
