@@ -52,3 +52,27 @@
 .actions a:hover {
     text-decoration: none;
 }
+
+.img-wrapper {
+    position: relative;
+    height: 100%;
+}
+
+.img-wrapper img {
+    z-index: 5;
+}
+
+.img-wrapper img:hover {
+    filter: brightness(50%);
+    z-index: 0;
+    transition: all .3s ease;
+}
+
+.img-wrapper > * {
+    position: absolute;
+}
+
+.img-desc {
+    color: white;
+    z-index: 2;
+}

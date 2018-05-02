@@ -5,20 +5,44 @@
 {% block content %}
 <h1>PROFILE</h1>
 
-<form method="post" name="update-pic-form" enctype="multipart/form-data" class="mb-5">
-    <div class="form-group">
-        <label for="profilepic">Choose a picture</label>
-        <input type="file" class="form-control-file" name="pic" id="profilepic">
-        <button type="submit" name="change-pic-btn" class="btn btn-primary mt-2">Change pic</button>
+<div class="modal fade mt-5" id="editProfilePic" tabindex="-1" role="dialog" aria-labelledby="editProfilePicLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfilePicLabel">Edit profile picture</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" name="update-pic-form" enctype="multipart/form-data" class="mb-5">            
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="pic" id="profilepic">
+                            <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="change-pic-btn" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
     </div>
-</form>
+</div>
 <div class="row">
     <div class="col-2">
+        <div class="img-wrapper d-flex justify-content-center align-items-center">        
         {% if user.pp_url is not empty %}
-        <img src="{{ user.pp_url }}" class="pp mr-3 ml-3">
+            <img data-toggle="modal" data-target="#editProfilePic" src="{{ user.pp_url }}" class="pp mr-3 ml-3">
         {% else %}
-        <img src="../assets/pp/default_pp.png" class="pp mr-3 ml-3">
+            <img src="../assets/pp/default_pp.png" class="pp mr-3 ml-3">
         {% endif %}
+            <div class="img-desc">
+                <i class="fas fa-pencil-alt fa-lg"></i>                
+            </div>
+        </div>
     </div>
     <div class="col-6 d-flex flex-column justify-content-center">
         <h4>{{ user.name }}</h4>
