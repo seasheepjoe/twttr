@@ -3,3 +3,5 @@
 composer.phar
 /config/parameters.yml
 .DS_Store
+/assets/pp/*
+!/assets/pp/default_pp.png

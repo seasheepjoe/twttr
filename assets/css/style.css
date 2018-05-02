@@ -27,9 +27,10 @@
     box-sizing: border-box;
 }
 
-#twtts .media {
+#twtts td, #twtts th {
+    border: inherit;
     border: solid 1px black;
-    border-radius: 3px;
+    padding: inherit;
 }
 
 .media-body h5 span {
@@ -42,4 +43,12 @@
 #twtts .media:hover {
     background-color: #fBfBfB;
     cursor: pointer;
+}
+
+.actions {
+    width: 40%;
+}
+
+.actions a:hover {
+    text-decoration: none;
 }

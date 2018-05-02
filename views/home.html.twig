@@ -3,19 +3,35 @@
 {% block page_title %}Twttr | Home{% endblock %}
 
 {% block content %}
-<div class="col-md-6 offset-md-3 mt-5" id="twtts">
-    {% for twtt in twtts %}
-    <div class="media p-4">
-        {% if twtt.pp_url is not empty %}
-            <img src="{{ twtt.pp_url }}" alt="{{ twtt.author_name}} profile picture" class="align-self-start twtt-thumbnail mr-3 ml-3">
-        {% else %}
-            <img src="../assets/pp/default_pp.png" alt="PP-Pro" class="align-self-start twtt-thumbnail mr-3 ml-3">
-        {% endif %}
-        <div class="media-body">
-            <h5 class="mt-0 d-flex justify-content-between">{{ twtt.author_name }}<span>{{ twtt.date|date("d/m/Y H:i") }}</span></h5>
-            <p>{{ twtt.content }}</p>
-        </div>
+<div class="container d-flex">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <table class="table col-md-6 mt-5" id="twtts">
+            {% for twtt in twtts %}
+            <tr class="">
+                <td class="col-md-6">
+                    <div class="media pr-4 pl-4 pt-4 pb-3">
+                        {% if twtt.pp_url is not empty %}
+                            <img src="{{ twtt.pp_url }}" alt="{{ twtt.author_name}} profile picture" class="align-self-start twtt-thumbnail mr-3 ml-3">
+                        {% else %}
+                            <img src="../assets/pp/default_pp.png" alt="PP-Pro" class="align-self-start twtt-thumbnail mr-3 ml-3">
+                        {% endif %}
+                        <div class="media-body">
+                            <h5 class="mt-0 d-flex justify-content-between">{{ twtt.author_name }}<span>{{ twtt.date|date("d/m/Y H:i") }}</span></h5>
+                            <p>{{twtt.content|nl2br}}</p>
+                            <div class="media-footer d-flex justify-content-center">
+                                <div class="actions d-flex justify-content-around">
+                                    <a href="">47 <i class="fas fa-retweet"></i></a>
+                                    <a href="">59<i class="fas fa-star"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
-    {% endfor %}
+    <div class="col-md-3"></div>
 </div>
 {% endblock %}
