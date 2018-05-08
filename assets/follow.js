@@ -10,7 +10,7 @@ window.addEventListener('load', () => {
             },
             dataType: 'json',
             success: (response) => {
-                console.log(response);
+                updateDOM(response);
             },
             error: (err, response) => {
                 console.log(err);
@@ -19,3 +19,8 @@ window.addEventListener('load', () => {
         return false;
     });
 });
+
+const updateDOM = (response) => {
+    document.querySelector('button[name="follow"]').innerHTML = response.text;
+    document.querySelector('form[name="follow"]').action = response.target;
+}

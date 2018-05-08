@@ -122,6 +122,24 @@ class UsersManager {
         $request->execute();
     }
 
+    public function unfollow($follower, $followed)
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $request = $pdo->prepare("DELETE FROM `follows` WHERE `follows`.`follower` = :follower AND `follows`.`followed` = :followed");
+        $request->bindParam(':follower', $follower);
+        $request->bindParam(':followed', $followed);
+        $request->execute();
+    }
+
+    public function isAlreadyFollowed($follower, $followed)
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        return $pdo->query("SELECT * FROM `follows` WHERE `follows`.`follower` = '$follower' AND `follows`.`followed` = '$followed'")->fetch(\PDO::FETCH_ASSOC);
+    }
+
     public function findUserById($user_id)
     {
         $dbManager = DBManager::getInstance();

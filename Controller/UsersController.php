@@ -89,8 +89,19 @@ class UsersController extends BaseController
     public function followAction() {
         $manager = new UsersManager;
         $manager->follow($_POST['follower'], $_POST['followed']);
-        $status = new \stdClass;
-        return json_encode($status);
+        $response = new \stdClass;
+        $response->text = 'Followed';
+        $response->target = '/unfollow';
+        return json_encode($response);
+    }
+
+    public function unfollowAction() {
+        $manager = new UsersManager;
+        $manager->unfollow($_POST['follower'], $_POST['followed']);
+        $response = new \stdClass;
+        $response->text = 'Follow';
+        $response->target = '/follow';
+        return json_encode($response);
     }
 
     public function userProfileAction()
@@ -100,6 +111,10 @@ class UsersController extends BaseController
         $username = $matches[1];
         $manager = new UsersManager;
         $userData = $manager->getUserInfo($username);
+        if (isset($_SESSION['name']))
+        {
+            $userData['is_followed_by'] = $manager->isAlreadyFollowed($_SESSION['id'], $userData['id']) ? true : false;
+        }
         $userData['followings'] = $manager->getUserFollowings($userData['id']);
         $userData['followers'] = $manager->getUserFollowers($userData['id']);
         $data = [
