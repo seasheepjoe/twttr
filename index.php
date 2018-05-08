@@ -18,6 +18,10 @@ $twig = new Twig_Environment($loader, array(
 
 $request = substr($_SERVER['REQUEST_URI'], 1);
 $request = explode('?', $request)[0];
+if (substr($request, -1) == '/')
+{
+    $request = substr($request, 0, -1);
+}
 
 if ($request == '') {
     $request = 'home';
