@@ -23,7 +23,37 @@ class TwttsManager
         $pdo = $dbManager->getPdo();
         $request = $pdo->query("SELECT twtts.*, users.name AS author_name, users.pp_url FROM twtts LEFT JOIN users ON users.id = twtts.author");
         $twtts = $request->fetchAll();
+        foreach ($twtts as $key => $value) {
+            $id = $value['id'];
+            $twtts[$key]['favs'] = $this->getFavs($id);
+            $twtts[$key]['rtwtts'] = $this->getRtwtts($id);
+        }
+        
         return $twtts;
+    }
+
+    public function getFavs($id)
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+        $getFavs = $pdo->prepare("SELECT COUNT(favs.id) AS favs FROM favs WHERE favs.twtt_id = ?");
+        $getFavs->execute([$id]);
+
+        return $getFavs->fetch()['favs'];
+    }
+
+    public function getRtwtts($id)
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+        $getFavs = $pdo->prepare("SELECT COUNT(rtwtt.id) AS rtwtts FROM rtwtt WHERE rtwtt.twtt_id = ?");
+        $getFavs->execute([$id]);
+
+        return $getFavs->fetch()['rtwtts'];
     }
 
     public function setReaction($type, $user_id, $twtt_id)
