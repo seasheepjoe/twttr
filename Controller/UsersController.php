@@ -89,6 +89,8 @@ class UsersController extends BaseController
     public function followAction() {
         $manager = new UsersManager;
         $manager->follow($_POST['follower'], $_POST['followed']);
+        $status = new \stdClass;
+        return json_encode($status);
     }
 
     public function userProfileAction()

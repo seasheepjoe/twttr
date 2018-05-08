@@ -122,6 +122,13 @@ class UsersManager {
         $request->execute();
     }
 
+    public function findUserById($user_id)
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        return $pdo->query("SELECT * FROM `users` WHERE `users`.`id` = '$user_id'")->fetch(\PDO::FETCH_ASSOC);
+    }
+
     public function getUserInfo($user)
     {
         $dbManager = DBManager::getInstance();
