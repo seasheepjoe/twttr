@@ -20,4 +20,13 @@ class TwttsController extends BaseController
             exit();
         }
     }
+
+    public function rtwttAction ()
+    {
+        if (isset($_GET['id']) && $id = intval($_GET['id']))
+        {
+            $manager = new TwttsManager;
+            return $manager->setRtwtt($_SESSION['id'], $_GET['id']);
+        }
+    }
 }

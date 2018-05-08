@@ -21,8 +21,8 @@
                             <p>{{twtt.content|nl2br}}</p>
                             <div class="media-footer d-flex justify-content-center">
                                 <div class="actions d-flex justify-content-around">
-                                    <a href="">47 <i class="fas fa-retweet"></i></a>
-                                    <a href="">59<i class="fas fa-star"></i></a>
+                                    <div class="rtwtt" data-twtt={{ twtt.id }}>{{ twtt.rtwtts }}<i class="fas fa-retweet"></i></div>
+                                    <div class="fav">{{ twtt.favs }}<i class="fas fa-star"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -34,4 +34,29 @@
     </div>
     <div class="col-md-3"></div>
 </div>
+<script>
+function json(response) {
+      return response.json()
+}
+
+    $('.rtwtt').click(function () {
+        id = this.dataset.twtt;
+        var url = 'rtwtt?&id=' + id;
+        fetch(url, {
+            method: 'post',
+            headers: {
+              "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: 'rtwtt',
+            credentials: 'include'
+          })
+          .then(json)
+          .then(function (data) {
+            console.log('Request succeeded with JSON response', data);
+          })
+          .catch(function (error) {
+            console.log('Request failed', error);
+          });
+    });
+</script>
 {% endblock %}
