@@ -26,31 +26,33 @@ class TwttsManager
         return $twtts;
     }
 
-    public function setRtwtt($user_id, $twtt_id)
+    public function setReaction($type, $user_id, $twtt_id)
     {
+
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
-        $ifRt = $pdo->prepare("SELECT * FROM `rtwtt` WHERE `user_id` = :user_id AND `twtt_id` = :twtt_id");
-        $ifRt->bindParam(':user_id', $user_id);
-        $ifRt->bindParam(':twtt_id', $twtt_id);
-        $ifRt->execute();
+        $ifReactionExists = $pdo->prepare("SELECT * FROM $type WHERE `user_id` = :user_id AND `twtt_id` = :twtt_id");
+        $ifReactionExists->bindParam(':user_id', $user_id);
+        $ifReactionExists->bindParam(':twtt_id', $twtt_id);
+        $ifReactionExists->execute();
 
-        $request = $pdo->prepare("INSERT INTO `rtwtt` (`id`, `twtt_id`, `user_id`) VALUES (NULL, :twtt_id, :user_id)");
+        $request = $pdo->prepare("INSERT INTO $type (`id`, `twtt_id`, `user_id`) VALUES (NULL, :twtt_id, :user_id)");
         $request->bindParam(':user_id', $user_id);
         $request->bindParam(':twtt_id', $twtt_id);
+        
 
-        $burnRt = $pdo->prepare("DELETE FROM `rtwtt` WHERE `twtt_id` = :twtt_id AND `user_id` = :user_id");
-        $burnRt->bindParam(':twtt_id', $twtt_id);
-        $burnRt->bindParam(':user_id', $user_id);
+        $burnReaction = $pdo->prepare("DELETE FROM $type WHERE `twtt_id` = :twtt_id AND `user_id` = :user_id");
+        $burnReaction->bindParam(':user_id', $user_id);
+        $burnReaction->bindParam(':twtt_id', $twtt_id);
 
-        if (empty($ifRt->fetchAll())) {
+        if (empty($ifReactionExists->fetchAll())) {
             $request->execute();
-            return json_encode(['status' => 'Rtwtt added on ' . $twtt_id]);
+            return json_encode(['status' => $type . ' added on ' . $twtt_id]);
         } else {
-            $burnRt->execute();
-            return json_encode(['status' => 'Rtwtt removed on ' . $twtt_id]);
+            $burnReaction->execute();
+            return json_encode(['status' => $type . ' removed on ' . $twtt_id]);
         }
     }
 }

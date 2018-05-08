@@ -10,3 +10,4 @@ routes:
     newTwtt: "Twtts:newTwtt"
     follow: "Users:follow"
     rtwtt: "Twtts:rtwtt"
+    fav: "Twtts:fav"
