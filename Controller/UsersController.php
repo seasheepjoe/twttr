@@ -92,6 +92,8 @@ class UsersController extends BaseController
         $response = new \stdClass;
         $response->text = 'Followed';
         $response->target = '/unfollow';
+        $response->followers = 'Followers: '. $manager->getUserFollowers($_POST['followed']);
+        $response->followings = 'Following: ' . $manager->getUserFollowings($_POST['followed']);
         return json_encode($response);
     }
 
@@ -101,6 +103,8 @@ class UsersController extends BaseController
         $response = new \stdClass;
         $response->text = 'Follow';
         $response->target = '/follow';
+        $response->followers = 'Followers: '. $manager->getUserFollowers($_POST['followed']);
+        $response->followings = 'Following: ' . $manager->getUserFollowings($_POST['followed']);
         return json_encode($response);
     }
 
