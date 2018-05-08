@@ -9,3 +9,5 @@ routes:
     profile:    "Users:profile" 
     newTwtt: "Twtts:newTwtt"
     follow: "Users:follow"
+    rtwtt: "Twtts:rtwtt"
+    fav: "Twtts:fav"

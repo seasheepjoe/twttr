@@ -85,7 +85,7 @@ class UsersManager {
     }
 
     public function changePic($name, $tmp_name, $type, $size) {
-        $url = '/assets/pp/' . $_SESSION['id'] . '_pp.';
+        $url = './assets/pp/' . $_SESSION['id'] . '_pp.';
         $new_pp =  $url . substr($type, 6);
         if (is_uploaded_file($tmp_name)){
             $dbManager = DBManager::getInstance();

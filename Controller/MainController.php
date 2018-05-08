@@ -17,6 +17,7 @@ class MainController extends BaseController
             'twtts' => $twtts,
             'user' => $_SESSION,
         ];
+
         return $this->render('home.html.twig', $data);
     }
 
