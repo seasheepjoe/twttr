@@ -4,6 +4,7 @@ namespace Controller;
 
 use Cool\BaseController;
 use Model\UsersManager;
+use Model\TwttsManager;
 
 class UsersController extends BaseController
 {
@@ -121,9 +122,12 @@ class UsersController extends BaseController
         }
         $userData['followings'] = $manager->getUserFollowings($userData['id']);
         $userData['followers'] = $manager->getUserFollowers($userData['id']);
+        $twtt_manager = new TwttsManager();
+        $userTwtts = $twtt_manager->getUserTwtts($userData['id']);
         $data = [
             'user'        => $_SESSION,
-            'userProfile' => $userData
+            'userProfile' => $userData,
+            'twtts'       => $userTwtts
         ];
         return $this->render('userprofile.html.twig', $data);
     }
