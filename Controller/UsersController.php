@@ -4,6 +4,7 @@ namespace Controller;
 
 use Cool\BaseController;
 use Model\UsersManager;
+use Model\TwttsManager;
 
 class UsersController extends BaseController
 {
@@ -60,9 +61,10 @@ class UsersController extends BaseController
     public function profileAction()
     {
         if (!isset($_SESSION['name'])) {
-            header('Location: /');
+            header('Location: /login');
             exit();
         } else {
+            $manager = new UsersManager;
             if (isset($_POST['change-pic-btn'])) {
                 $type = $_FILES['pic']['type'];
                 $size = $_FILES['pic']['size'];
@@ -72,12 +74,17 @@ class UsersController extends BaseController
                 if($type !== 'image/png' && $type !== 'image/jpg' && $type !== 'image/jpeg') {
                     $errors['type'] = 'You can only upload png/jpg/jpeg files';
                 } else {
-                    $change_pic = new UsersManager;
-                    $change_pic->changePic($name, $tmp_name, $type, $size);
+                    $manager = new UsersManager;
+                    $manager->changePic($name, $tmp_name, $type, $size);
                 }
             }
+            $_SESSION['followings'] = $manager->getUserFollowings($_SESSION['id']);
+            $_SESSION['followers'] = $manager->getUserFollowers($_SESSION['id']);
+            $twtts_manager = new TwttsManager;
+            $my_twtts = $twtts_manager->getUserTwtts($_SESSION['id']);
             $data = [
                 'user' => $_SESSION,
+                'twtts'=> $my_twtts,
             ];
         }
         return $this->render('profile.html.twig', $data);
@@ -86,18 +93,44 @@ class UsersController extends BaseController
     public function followAction() {
         $manager = new UsersManager;
         $manager->follow($_POST['follower'], $_POST['followed']);
+        $response = new \stdClass;
+        $response->text = 'Followed';
+        $response->target = '/unfollow';
+        $response->followers = 'Followers: '. $manager->getUserFollowers($_POST['followed']);
+        $response->followings = 'Following: ' . $manager->getUserFollowings($_POST['followed']);
+        return json_encode($response);
+    }
+
+    public function unfollowAction() {
+        $manager = new UsersManager;
+        $manager->unfollow($_POST['follower'], $_POST['followed']);
+        $response = new \stdClass;
+        $response->text = 'Follow';
+        $response->target = '/follow';
+        $response->followers = 'Followers: '. $manager->getUserFollowers($_POST['followed']);
+        $response->followings = 'Following: ' . $manager->getUserFollowings($_POST['followed']);
+        return json_encode($response);
     }
 
     public function userProfileAction()
     {
         $regex = '/profile\/([a-zA-Z]+)/';
         preg_match($regex, $_SERVER['REQUEST_URI'], $matches);
-        $userProfile = $matches[1];
+        $username = $matches[1];
         $manager = new UsersManager;
-        $userData = $manager->getUserInfo($userProfile);
+        $userData = $manager->getUserInfo($username);
+        if (isset($_SESSION['name']))
+        {
+            $userData['is_followed_by'] = $manager->isAlreadyFollowed($_SESSION['id'], $userData['id']) ? true : false;
+        }
+        $userData['followings'] = $manager->getUserFollowings($userData['id']);
+        $userData['followers'] = $manager->getUserFollowers($userData['id']);
+        $twtt_manager = new TwttsManager();
+        $userTwtts = $twtt_manager->getUserTwtts($userData['id']);
         $data = [
             'user'        => $_SESSION,
-            'userProfile' => $userData
+            'userProfile' => $userData,
+            'twtts'       => $userTwtts
         ];
         return $this->render('userprofile.html.twig', $data);
     }

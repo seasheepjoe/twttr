@@ -1,0 +1,26 @@
+{
+  "name": "twttr",
+  "version": "1.0.0",
+  "description": "Twttr is the new Twitter",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LouisLoiseau/twttr.git"
+  },
+  "author": "Louis Loiseau-Billon; Neil Richter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LouisLoiseau/twttr/issues"
+  },
+  "homepage": "https://github.com/LouisLoiseau/twttr#readme"
+}
