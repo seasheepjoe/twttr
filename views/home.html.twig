@@ -21,8 +21,8 @@
                             <p>{{twtt.content|nl2br}}</p>
                             <div class="media-footer d-flex justify-content-center">
                                 <div class="actions d-flex justify-content-around">
-                                    <div class="rtwtt" data-twtt={{ twtt.id }}>{{ twtt.rtwtts }}<i class="fas fa-retweet"></i></div>
-                                    <div class="fav" data-twtt={{ twtt.id }}>{{ twtt.favs }}<i class="fas fa-star"></i></div>
+                                    <div class="rtwtt" data-twtt={{ twtt.id }}><span class="rt-nbr">{{ twtt.rtwtts }}</span><i class="fas fa-retweet"></i></div>
+                                    <div class="fav" data-twtt={{ twtt.id }}><span class="fav-nbr">{{ twtt.favs }}</span><i class="fas fa-star"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -39,7 +39,7 @@ function json(response) {
       return response.json()
 }
 
-    $('.rtwtt').click(function () {
+    $('.rtwtt').click(function (e) {
         id = this.dataset.twtt;
         var url = 'rtwtt?&id=' + id;
         fetch(url, {
@@ -53,13 +53,14 @@ function json(response) {
           .then(json)
           .then(function (data) {
             console.log('Request succeeded with JSON response', data);
+            e.currentTarget.firstChild.innerHTML = data.rtwtts;
           })
           .catch(function (error) {
             console.log('Request failed', error);
           });
     });
 
-    $('.fav').click(function () {
+    $('.fav').click(function (e) {
         id = this.dataset.twtt;
         var url = 'fav?&id=' + id;
         fetch(url, {
@@ -73,6 +74,7 @@ function json(response) {
           .then(json)
           .then(function (data) {
             console.log('Request succeeded with JSON response', data);
+            e.currentTarget.firstChild.innerHTML = data.favs;
           })
           .catch(function (error) {
             console.log('Request failed', error);
