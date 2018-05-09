@@ -94,10 +94,18 @@ class TwttsManager
 
         if (empty($ifReactionExists->fetchAll())) {
             $request->execute();
-            return json_encode(['status' => $type . ' added on ' . $twtt_id]);
+            return json_encode([
+                'status' => $type . ' added on ' . $twtt_id,
+                'rtwtts' => $this->getRtwtts($twtt_id),
+                'favs'   => $this->getFavs($twtt_id)
+            ]);
         } else {
             $burnReaction->execute();
-            return json_encode(['status' => $type . ' removed on ' . $twtt_id]);
+            return json_encode([
+                'status' => $type . ' removed on ' . $twtt_id,
+                'rtwtts' => $this->getRtwtts($twtt_id),
+                'favs'   => $this->getFavs($twtt_id)
+                ]);
         }
     }
 }
