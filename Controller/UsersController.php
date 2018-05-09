@@ -61,7 +61,7 @@ class UsersController extends BaseController
     public function profileAction()
     {
         if (!isset($_SESSION['name'])) {
-            header('Location: /');
+            header('Location: /login');
             exit();
         } else {
             $manager = new UsersManager;
@@ -80,8 +80,11 @@ class UsersController extends BaseController
             }
             $_SESSION['followings'] = $manager->getUserFollowings($_SESSION['id']);
             $_SESSION['followers'] = $manager->getUserFollowers($_SESSION['id']);
+            $twtts_manager = new TwttsManager;
+            $my_twtts = $twtts_manager->getUserTwtts($_SESSION['id']);
             $data = [
                 'user' => $_SESSION,
+                'twtts'=> $my_twtts,
             ];
         }
         return $this->render('profile.html.twig', $data);
