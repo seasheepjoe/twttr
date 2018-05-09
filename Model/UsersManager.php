@@ -85,17 +85,16 @@ class UsersManager {
     }
 
     public function changePic($name, $tmp_name, $type, $size) {
-        $url = './assets/pp/' . $_SESSION['id'] . '_pp.';
-        $new_pp =  $url . substr($type, 6);
+        $new_pp = '/assets/pp/' . basename($name);
         if (is_uploaded_file($tmp_name)){
             $dbManager = DBManager::getInstance();
             $pdo = $dbManager->getPdo();
             $stmt = $pdo->query("SELECT users.pp_url FROM users WHERE users.id = '".$_SESSION['id']."'");
             $old_pp_url = $stmt->fetch();
             if (!empty($old_pp_url['pp_url'])){
-                unlink($old_pp_url['pp_url']);
+                unlink($_SERVER['DOCUMENT_ROOT'] . $old_pp_url['pp_url']);
             }
-            if (move_uploaded_file($tmp_name, $new_pp)) {
+            if (move_uploaded_file($tmp_name, $_SERVER['DOCUMENT_ROOT'] . $new_pp)) {
                 $request = $pdo->prepare("UPDATE users SET users.pp_url = :pp_url WHERE users.id = :id");
                 $request->bindParam(':pp_url', $new_pp);
                 $request->bindParam(':id', $_SESSION['id']);
