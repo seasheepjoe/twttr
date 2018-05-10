@@ -66,7 +66,7 @@ class UsersManager {
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
         $request = $pdo->query("SELECT * FROM `users` WHERE `email` ='" . $email . "'");
-        $data = $request->fetch();
+        $data = $request->fetch(\PDO::FETCH_ASSOC);
         if (empty($data)) {
             $errors['error'] = 'Invalid email or password';
             return $errors;
