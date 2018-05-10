@@ -12,9 +12,9 @@ class TwttsManager
         $pdo = $dbManager->getPdo();
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $request = $pdo->prepare("INSERT INTO `twtts` (`id`, `rt`, `rt_author`, `author`, `content`, `date`) VALUES (NULL, :rt, :rt_author, :author, :content, :date)");
-        $rt = 1;
-        isset($rt_author) ? $request->bindParam(':rt', $rt) : $request->bindParam(':rt', NULL);
-        isset($rt_author) ? $request->bindParam(':rt_author', $rt_author) : $request->bindParam(':rt_author', NULL);
+        isset($rt_author) ? $rt = 1 : $rt = NULL;
+        $request->bindParam(':rt', $rt);
+        $request->bindParam(':rt_author', $rt_author);
         $request->bindParam(':author', $user_id);
         $request->bindParam(':content', $content);
         isset($date) ? : $date = date("Y-m-d H:i:s");
@@ -65,7 +65,7 @@ class TwttsManager
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
         $user = $_SESSION['id'];
-        $request = $pdo->query("SELECT twtts.*, users.name AS author_name, users.pp_url FROM twtts LEFT JOIN users ON users.id = twtts.author WHERE twtts.author IN (SELECT followed FROM `follows` WHERE follower = $user)");
+        $request = $pdo->query("SELECT twtts.*, users.name AS author_name, users.pp_url FROM twtts LEFT JOIN users ON users.id = twtts.author WHERE twtts.author IN (SELECT followed FROM `follows` WHERE follower = $user) OR twtts.author = $user");
         $twtts = $request->fetchAll(\PDO::FETCH_ASSOC);
         foreach ($twtts as $key => $value) {
             $id = $value['id'];
