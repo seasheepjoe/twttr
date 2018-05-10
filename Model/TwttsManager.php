@@ -21,15 +21,31 @@ class TwttsManager
     {
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
-        $request = $pdo->query("SELECT twtts.*, users.name AS author_name, users.pp_url FROM twtts LEFT JOIN users ON users.id = twtts.author");
+        $user = $_SESSION['id'];
+        $request = $pdo->query("SELECT twtts.*, users.name AS author_name, users.pp_url FROM twtts LEFT JOIN users ON users.id = twtts.author WHERE twtts.author IN (SELECT followed FROM `follows` WHERE follower = $user)");
         $twtts = $request->fetchAll(\PDO::FETCH_ASSOC);
         foreach ($twtts as $key => $value) {
             $id = $value['id'];
             $twtts[$key]['favs'] = $this->getFavs($id);
             $twtts[$key]['rtwtts'] = $this->getRtwtts($id);
+            $twtts[$key]['rtwtted'] = $this->isRT($twtts[$key]['id'], $_SESSION['id']) ? true : false;
+            $twtts[$key]['faved'] = $this->isFav($twtts[$key]['id'], $_SESSION['id']) ? true : false;
         }
-        
         return $twtts;
+    }
+
+    public function isRT($twtt_id, $user_id)
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        return $pdo->query("SELECT * FROM `rtwtt` WHERE `rtwtt`.`user_id` = '$user_id' AND `rtwtt`.`twtt_id` = '$twtt_id'")->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    public function isFav($twtt_id, $user_id)
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        return $pdo->query("SELECT * FROM `favs` WHERE `favs`.`user_id` = '$user_id' AND `favs`.`twtt_id` = '$twtt_id'")->fetch(\PDO::FETCH_ASSOC);
     }
 
     public function getUserTwtts($user_id)
@@ -97,15 +113,19 @@ class TwttsManager
             return json_encode([
                 'status' => $type . ' added on ' . $twtt_id,
                 'rtwtts' => $this->getRtwtts($twtt_id),
-                'favs'   => $this->getFavs($twtt_id)
+                'favs'   => $this->getFavs($twtt_id),
+                'type'   => $type,
+                'action' => 'do'
             ]);
         } else {
             $burnReaction->execute();
             return json_encode([
                 'status' => $type . ' removed on ' . $twtt_id,
                 'rtwtts' => $this->getRtwtts($twtt_id),
-                'favs'   => $this->getFavs($twtt_id)
-                ]);
+                'favs'   => $this->getFavs($twtt_id),
+                'type'   => $type,
+                'action' => 'undo'
+            ]);
         }
     }
 }
