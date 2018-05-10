@@ -21,7 +21,8 @@ class TwttsManager
     {
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
-        $request = $pdo->query("SELECT twtts.*, users.name AS author_name, users.pp_url FROM twtts LEFT JOIN users ON users.id = twtts.author");
+        $user = $_SESSION['id'];
+        $request = $pdo->query("SELECT twtts.*, users.name AS author_name, users.pp_url FROM twtts LEFT JOIN users ON users.id = twtts.author WHERE twtts.author IN (SELECT followed FROM `follows` WHERE follower = $user)");
         $twtts = $request->fetchAll(\PDO::FETCH_ASSOC);
         foreach ($twtts as $key => $value) {
             $id = $value['id'];
