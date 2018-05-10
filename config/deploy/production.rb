@@ -23,8 +23,12 @@ role :app, %w{root@carlos.place}, my_property: :my_value
 
 set :deploy_to, "/var/www/html/twttr"
 set :linked_files, %w{config/parameters.yml}
+set :linked_dirs, %w{assets/pp}
 set :log_level, 'debug'
 namespace :deploy do
+    after :starting, 'deploy:check' do
+      invoke 'save:copying'
+    end
     after :finishing, 'deploy:cleanup' do
       invoke 'install:installing'
     end
