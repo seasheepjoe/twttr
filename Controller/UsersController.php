@@ -119,6 +119,10 @@ class UsersController extends BaseController
         $username = $matches[1];
         $manager = new UsersManager;
         $userData = $manager->getUserInfo($username);
+        if (isset($_SESSION['id']) && $userData['id'] == $_SESSION['id'])
+        {
+            return header('Location: /profile');
+        }
         if (isset($_SESSION['name']))
         {
             $userData['is_followed_by'] = $manager->isAlreadyFollowed($_SESSION['id'], $userData['id']) ? true : false;

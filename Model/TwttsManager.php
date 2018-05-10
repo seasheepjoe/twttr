@@ -101,8 +101,11 @@ class TwttsManager
             $id = $value['id'];
             $twtts[$key]['favs'] = $this->getFavs($id);
             $twtts[$key]['rtwtts'] = $this->getRtwtts($id);
-            $twtts[$key]['rtwtted'] = $this->isRT($twtts[$key]['id'], $_SESSION['id']) ? true : false;
-            $twtts[$key]['faved'] = $this->isFav($twtts[$key]['id'], $_SESSION['id']) ? true : false;
+            if (isset($_SESSION['id']))
+            {
+                $twtts[$key]['rtwtted'] = $this->isRT($twtts[$key]['id'], $_SESSION['id']) ? true : false;
+                $twtts[$key]['faved'] = $this->isFav($twtts[$key]['id'], $_SESSION['id']) ? true : false;
+            }
         }
         return $twtts;
     }
