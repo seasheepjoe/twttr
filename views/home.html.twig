@@ -15,13 +15,19 @@
                     <div class="media pr-4 pl-4 pt-4 pb-3">
                         <a href="/profile/{{twtt.author_name}}">
                         {% if twtt.pp_url is not empty %}
-                            <img src="{{ twtt.pp_url }}" alt="{{ twtt.author_name}} profile picture" class="align-self-start twtt-thumbnail mr-3 ml-3">
+                            <img src="{{ twtt.pp_url }}" alt="{{ twtt.author_name }} profile picture" class="align-self-start twtt-thumbnail mr-3 ml-3">
                         {% else %}
                             <img src="/assets/pp/default_pp.png" alt="PP-Pro" class="align-self-start twtt-thumbnail mr-3 ml-3">
                         {% endif %}
                         </a>
-                        <div class="media-body">
-                            <h5 class="mt-0 d-flex justify-content-between"><a href="/profile/{{twtt.author_name}}" class="text-dark">{{ twtt.author_name }}</a><span>{{ twtt.date|date("d/m/Y H:i") }}</span></h5>
+                        <div class="media-body position-relative">
+                            {% if twtt.rt_author_name is not null %}
+                            <small class="text-muted position-absolute rtwtt-msg">{{ twtt.rt_author_name }} rtwtted :</small>
+                            {% endif %}
+                            <h5 class="mt-0 d-flex justify-content-between">
+                                <a href="/profile/{{twtt.author_name}}" class="text-dark">{{ twtt.author_name }}</a>
+                                <span>{% if twtt.rt_author_name is not null %}{{ twtt.post_time|date("d/m/Y H:i") }}{% else %}{{ twtt.date|date("d/m/Y H:i") }}{% endif %}</span>
+                            </h5>
                             <p>{{twtt.content|nl2br}}</p>
                             <div class="media-footer d-flex justify-content-center">
                                 <div class="actions d-flex justify-content-around">
