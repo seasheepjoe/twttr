@@ -26,9 +26,9 @@ set :linked_files, %w{config/parameters.yml}
 set :linked_dirs, %w{assets/pp}
 set :log_level, 'debug'
 namespace :deploy do
-    after :starting, 'deploy:check' do
-      invoke 'save:copying'
-    end
+    # after :starting, 'deploy:check' do
+    #   invoke 'save:copying'
+    # end
     after :finishing, 'deploy:cleanup' do
       invoke 'install:installing'
     end
