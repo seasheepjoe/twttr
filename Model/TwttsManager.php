@@ -65,7 +65,24 @@ class TwttsManager
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
         $user = $_SESSION['id'];
-        $request = $pdo->query("SELECT twtts.*, users.name AS author_name, users.pp_url, u2.name AS rt_author_name FROM twtts LEFT JOIN users ON users.id = twtts.author LEFT JOIN users u2 ON u2.id = twtts.rt_author WHERE twtts.author IN( SELECT followed FROM `follows` WHERE follower = $user ) OR twtts.author = $user OR twtts.rt_author = $user ORDER BY `post_time` DESC");
+        $request = $pdo->query("SELECT twtts.*, users.name AS author_name, users.pp_url, u2.name AS rt_author_name FROM twtts LEFT JOIN users ON users.id = twtts.author LEFT JOIN users u2 ON u2.id = twtts.rt_author WHERE twtts.author IN( SELECT followed FROM `follows` WHERE follower = $user ) OR twtts.author = $user OR twtts.rt_author = $user ORDER BY `post_time` DESC LIMIT 10");
+        $twtts = $request->fetchAll(\PDO::FETCH_ASSOC);
+        foreach ($twtts as $key => $value) {
+            $id = $value['id'];
+            $twtts[$key]['favs'] = $this->getFavs($id);
+            $twtts[$key]['rtwtts'] = $this->getRtwtts($id);
+            $twtts[$key]['rtwtted'] = $this->isRT($twtts[$key]['id'], $_SESSION['id']) ? true : false;
+            $twtts[$key]['faved'] = $this->isFav($twtts[$key]['id'], $_SESSION['id']) ? true : false;
+        }
+        return $twtts;
+    }
+
+    public function getNewTwtts($last_date)
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        $user = $_SESSION['id'];
+        $request = $pdo->query("SELECT twtts.*, users.name AS author_name, users.pp_url, u2.name AS rt_author_name FROM twtts LEFT JOIN users ON users.id = twtts.author LEFT JOIN users u2 ON u2.id = twtts.rt_author WHERE twtts.date < '$last_date' AND twtts.author IN( SELECT followed FROM `follows` WHERE follower = $user ) OR twtts.author = $user OR twtts.rt_author = $user ORDER BY `date` DESC LIMIT 10");
         $twtts = $request->fetchAll(\PDO::FETCH_ASSOC);
         foreach ($twtts as $key => $value) {
             $id = $value['id'];
@@ -101,11 +118,8 @@ class TwttsManager
             $id = $value['id'];
             $twtts[$key]['favs'] = $this->getFavs($id);
             $twtts[$key]['rtwtts'] = $this->getRtwtts($id);
-            if (isset($_SESSION['id']))
-            {
-                $twtts[$key]['rtwtted'] = $this->isRT($twtts[$key]['id'], $_SESSION['id']) ? true : false;
-                $twtts[$key]['faved'] = $this->isFav($twtts[$key]['id'], $_SESSION['id']) ? true : false;
-            }
+            $twtts[$key]['rtwtted'] = $this->isRT($twtts[$key]['id'], $_SESSION['id']) ? true : false;
+            $twtts[$key]['faved'] = $this->isFav($twtts[$key]['id'], $_SESSION['id']) ? true : false;
         }
         return $twtts;
     }

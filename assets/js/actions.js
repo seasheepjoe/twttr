@@ -50,6 +50,44 @@ window.addEventListener('load', () => {
                 console.log('Request failed', error);
             });
     });
+
+    $(window).scroll(function(e) {
+
+        if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+
+            var nodes = document.querySelectorAll('.last-date');
+            var first = nodes[0];
+            var last_date = nodes[nodes.length- 1].dataset.last;
+
+            console.log(last_date);
+
+            loadMoreData(last_date);
+
+        }
+
+    });
+
+
+    function loadMoreData(last_date){
+
+        var url = '/home';
+        fetch(url, {
+                method: 'post',
+                headers: {
+                    "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                body: 'last_date=' + last_date,
+                credentials: 'include'
+            })
+            .then(json)
+            .then(function (data) {
+                console.log('Request succeeded with JSON response', data);
+                document.querySelector('#twtts').innerHTML += data.html;
+            })
+            .catch(function (error) {
+                console.log('Request failed', error);
+            });
+    }        
 })
 
 const json = (response) => {

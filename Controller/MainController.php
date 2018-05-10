@@ -18,6 +18,19 @@ class MainController extends BaseController
                 'twtts' => $twtts,
                 'user' => $_SESSION,
             ];
+
+            if (isset($_POST['last_date'])) {
+                $manager = new TwttsManager;
+                $newTwtts = $manager->getNewTwtts($_POST['last_date']);
+
+                $data = [
+                    'twtts' => $newTwtts,
+                    'user'  => $_SESSION,
+                ];
+                
+                return json_encode(['html' => $this->render('twtt.html.twig', $data)]);
+            }
+
             return $this->render('home.html.twig', $data);
         } else {
             return header('Location: /login');
