@@ -10,15 +10,18 @@ class MainController extends BaseController
 {
     public function homeAction()
     {
-        $manager = new TwttsManager;
-        $twtts = $manager->getTwtts();
-        // die(var_dump('<pre>', $twtts));
-        $data = [
-            'twtts' => $twtts,
-            'user' => $_SESSION,
-        ];
-
-        return $this->render('home.html.twig', $data);
+        if (isset($_SESSION['id']))
+        {
+            $manager = new TwttsManager;
+            $twtts = $manager->getTwtts();
+            $data = [
+                'twtts' => $twtts,
+                'user' => $_SESSION,
+            ];
+            return $this->render('home.html.twig', $data);
+        } else {
+            return header('Location: /login');
+        }
     }
 
     public function error404Action()
