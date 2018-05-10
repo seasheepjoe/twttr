@@ -22,7 +22,7 @@ class TwttsController extends BaseController
     }
 
     public function rtwttAction ()
-    {
+    {   
         if (isset($_GET['id']) && $id = intval($_GET['id']))
         {
             $manager = new TwttsManager;

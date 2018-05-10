@@ -1,7 +1,7 @@
 window.addEventListener('load', () => {
     $('.rtwtt').click(function (e) {
         id = this.dataset.twtt;
-        var url = 'rtwtt?&id=' + id;
+        var url = '/rtwtt?&id=' + id;
         fetch(url, {
                 method: 'post',
                 headers: {
@@ -27,7 +27,7 @@ window.addEventListener('load', () => {
 
     $('.fav').click(function (e) {
         id = this.dataset.twtt;
-        var url = 'fav?&id=' + id;
+        var url = '/fav?&id=' + id;
         fetch(url, {
                 method: 'post',
                 headers: {

@@ -6,15 +6,58 @@ use Cool\DBManager;
 
 class TwttsManager
 {
-    public function setTwtt($user_id, $content)
+    public function setTwtt($user_id, $content, $date = NULL, $rt_author = NULL)
     {
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $request = $pdo->prepare("INSERT INTO `twtts` (`id`, `author`, `content`) VALUES (NULL, :author, :content)");
+        $request = $pdo->prepare("INSERT INTO `twtts` (`id`, `rt`, `rt_author`, `author`, `content`, `date`) VALUES (NULL, :rt, :rt_author, :author, :content, :date)");
+        $rt = 1;
+        isset($rt_author) ? $request->bindParam(':rt', $rt) : $request->bindParam(':rt', NULL);
+        isset($rt_author) ? $request->bindParam(':rt_author', $rt_author) : $request->bindParam(':rt_author', NULL);
         $request->bindParam(':author', $user_id);
         $request->bindParam(':content', $content);
+        isset($date) ? : $date = date("Y-m-d H:i:s");
+        $request->bindParam(':date', $date);
         $request->execute();
+    }
+
+    public function unsetTwtt($twtt_id)
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        $request = $pdo->prepare("DELETE FROM `twtts` WHERE `twtts`.`id` = $twtt_id");
+
+        $request->execute();
+    }
+
+    public function setRT($twtt_id, $rtwtter)
+    {
+        $twtt = $this->getTwtt($twtt_id);
+        return $this->setTwtt($twtt['author'], $twtt['content'], $twtt['date'], $rtwtter);
+    }
+
+    public function unsetRT($twtt_id, $rtwtter)
+    {
+        $twtt = $this->getTwtt($twtt_id);
+        $rt = $this->getRT($twtt['content'], $rtwtter);
+        return $this->unsetTwtt($rt['id']);
+    }
+
+    public function getRT($content, $rt_author)
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        $request = $pdo->query("SELECT * FROM `twtts` WHERE twtts.content = '$content' AND twtts.rt = 1 AND twtts.rt_author = $rt_author");
+        return $request->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    public function getTwtt($twtt_id)
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        $request = $pdo->query("SELECT * FROM `twtts` WHERE twtts.id = $twtt_id");
+        return $request->fetch(\PDO::FETCH_ASSOC);
     }
 
     public function getTwtts()
@@ -52,14 +95,15 @@ class TwttsManager
     {
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
-        $request = $pdo->query("SELECT twtts.*, users.name AS author_name, users.pp_url FROM twtts LEFT JOIN users ON users.id = twtts.author WHERE twtts.author = $user_id ORDER BY `twtts`.`date` DESC");
+        $request = $pdo->query("SELECT twtts.*, users.name AS author_name, users.pp_url FROM twtts LEFT JOIN users ON users.id = twtts.author WHERE twtts.author = $user_id OR twtts.rt_author = $user_id ORDER BY `twtts`.`date` DESC");
         $twtts = $request->fetchAll(\PDO::FETCH_ASSOC);
         foreach ($twtts as $key => $value) {
             $id = $value['id'];
             $twtts[$key]['favs'] = $this->getFavs($id);
             $twtts[$key]['rtwtts'] = $this->getRtwtts($id);
+            $twtts[$key]['rtwtted'] = $this->isRT($twtts[$key]['id'], $_SESSION['id']) ? true : false;
+            $twtts[$key]['faved'] = $this->isFav($twtts[$key]['id'], $_SESSION['id']) ? true : false;
         }
-        
         return $twtts;
     }
 
@@ -110,6 +154,10 @@ class TwttsManager
 
         if (empty($ifReactionExists->fetchAll())) {
             $request->execute();
+            if ($type == 'rtwtt')
+            {
+                $this->setRT($twtt_id, $user_id);
+            }
             return json_encode([
                 'status' => $type . ' added on ' . $twtt_id,
                 'rtwtts' => $this->getRtwtts($twtt_id),
@@ -119,6 +167,10 @@ class TwttsManager
             ]);
         } else {
             $burnReaction->execute();
+            if ($type == 'rtwtt')
+            {
+                $this->unsetRT($twtt_id, $user_id);
+            }
             return json_encode([
                 'status' => $type . ' removed on ' . $twtt_id,
                 'rtwtts' => $this->getRtwtts($twtt_id),
