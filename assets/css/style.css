@@ -45,8 +45,7 @@ main {
 }
 
 #twtts .media:hover {
-    background-color: #fBfBfB;
-    cursor: pointer;
+    background-color: #EFEFEF;
 }
 
 .actions {
@@ -89,4 +88,8 @@ h4 a {
 .rtwtt-msg {
     transform: translateY(-15px);
     font-size: .6rem;
+}
+
+.rtwtt:hover, .fav:hover {
+    cursor: pointer;
 }
