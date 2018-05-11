@@ -11,18 +11,7 @@ class UsersManager {
         $errors = [];
         $sendForm = true;
 
-        if (strlen($username) <= 2 || strlen($username) > 25) {
-            $errors['username'] = 'Le nom d\'utilisateur doit faire entre 3 et 25 charactères';
-            $sendForm = false;
-        }
-
-        if (strlen($password) <= 5 || strlen($password) > 15) {
-            $errors['password'] = 'Le mot de passe doit faire entre 6 et 25 charactères';
-            $sendForm = false;
-        }
-
         if ($password !== $password_repeat) {
-            $errors['password_repeat'] = 'Veuillez taper le même mot de passe';
             $sendForm = false;
         }
 

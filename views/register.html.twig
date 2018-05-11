@@ -1,8 +1,11 @@
 {% extends 'layout.html.twig' %}
 {% block page_title %}Twttr | Register{% endblock %}
+{% block assets %}
+<script src="/assets/js/forms.js"></script>
+{% endblock %}
 
 {% block content %}
-<form action="/register" method="POST">
+<form action="/register" class="register-form">
     <fieldset>
         <div class="form-row justify-content-center">
             <div class="form-group col-md-3">
@@ -12,24 +15,28 @@
         <div class="form-row justify-content-center">
             <div class="form-group col-md-3">
                 <label for="username">Username</label>
+                <div class="register-errors" id="err-name"></div>
                 <input type="text" class="form-control" id="username" name="username" placeholder="Username">
             </div>
         </div>
         <div class="form-row justify-content-center">
             <div class="form-group col-md-3">
                 <label for="email">Email</label>
+                <div class="register-errors" id="err-email"></div>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Email">
             </div>
         </div>
         <div class="form-row justify-content-center">
             <div class="form-group col-md-3">
                 <label for="username">Password</label>
+                <div class="register-errors" id="err-password"></div>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
             </div>
         </div>
         <div class="form-row justify-content-center">
             <div class="form-group col-md-3">
                 <label for="password-repeat">Confirm password</label>
+                <div class="register-errors" id="err-password-repeat"></div>
                 <input type="password" class="form-control" id="password-repeat" name="password-repeat" placeholder="Confirm password">
             </div>
         </div>
@@ -38,4 +45,6 @@
         </div>
     </fieldset>
 </form>
+
+<div id="err-name"></div>
 {% endblock %}

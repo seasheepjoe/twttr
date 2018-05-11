@@ -16,17 +16,25 @@ class UsersController extends BaseController
             exit();
         } else {
             $data = [];
-            if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password-repeat'])) {
-                $username = htmlentities($_POST['username']);
+            if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['passwordRepeat'])) {
+                /*$username = htmlentities($_POST['name']);
                 $email = htmlentities($_POST['email']);
                 $password = htmlentities($_POST['password']);
                 $password_repeat = htmlentities($_POST['password-repeat']);
                 $users_manager = new UsersManager();
                 $errors = $users_manager->register($username, $email, $password, $password_repeat);
                 $data = [
-                    'errors' => $errors,
-                ];
+                    'errors' => $errors
+                ];*/
+
+                return var_dump($_POST);
+                
             }
+
+            if (!empty($_POST)) {
+                return var_dump(json_decode($_POST['data'])); // dddddddd
+            }
+
             return $this->render('register.html.twig', $data);
         }
     }
