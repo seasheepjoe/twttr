@@ -1,6 +1,10 @@
 window.addEventListener('load', () => {
     $('.rtwtt').click(function (e) {
-        id = this.dataset.twtt;
+        if (this.dataset.originalTwtt != '') {
+            id = this.dataset.originalTwtt;
+        } else {
+            id = this.dataset.twtt;
+        }
         var url = '/rtwtt?&id=' + id;
         fetch(url, {
                 method: 'post',
