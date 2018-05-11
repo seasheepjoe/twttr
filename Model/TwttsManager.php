@@ -6,15 +6,16 @@ use Cool\DBManager;
 
 class TwttsManager
 {
-    public function setTwtt($user_id, $content, $date = NULL, $rt_author = NULL)
+    public function setTwtt($user_id, $content, $date = NULL, $rt_author = NULL, $original_twtt = NULL)
     {
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $request = $pdo->prepare("INSERT INTO `twtts` (`id`, `rt`, `rt_author`, `author`, `content`, `date`) VALUES (NULL, :rt, :rt_author, :author, :content, :date)");
+        $request = $pdo->prepare("INSERT INTO `twtts` (`id`, `rt`, `rt_author`, `original_twtt`, `author`, `content`, `date`) VALUES (NULL, :rt, :rt_author, :original_twtt, :author, :content, :date)");
         isset($rt_author) ? $rt = 1 : $rt = NULL;
         $request->bindParam(':rt', $rt);
         $request->bindParam(':rt_author', $rt_author);
+        $request->bindParam(':original_twtt', $original_twtt);
         $request->bindParam(':author', $user_id);
         $request->bindParam(':content', $content);
         isset($date) ? : $date = date("Y-m-d H:i:s");
@@ -34,7 +35,7 @@ class TwttsManager
     public function setRT($twtt_id, $rtwtter)
     {
         $twtt = $this->getTwtt($twtt_id);
-        return $this->setTwtt($twtt['author'], $twtt['content'], $twtt['date'], $rtwtter);
+        return $this->setTwtt($twtt['author'], $twtt['content'], $twtt['date'], $rtwtter, $twtt['id']);
     }
 
     public function unsetRT($twtt_id, $rtwtter)
