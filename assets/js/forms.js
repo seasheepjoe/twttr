@@ -1,51 +1,58 @@
 window.addEventListener('load', () => {
 
     const data = {};
-    const username = document.querySelector('#username');
-    const email = document.querySelector('#email');
-    const password = document.querySelector('#password');
-    const passwordRepeat = document.querySelector('#password-repeat');
+    const username = $('#username');
+    const email = $('#email');
+    const password = $('#password');
+    const passwordRepeat = $('#password-repeat');
     const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
 
-    username.onkeyup = () => {
-        if (username.value.length <= 2 || username.value.length > 25) {
-            $('#err-name').html('Username must be 3-25');
+    username.keyup(() => {
+        if (username.val().length <= 2 || username.val().length > 25) {
+            invalidate(username);
+            $('#register-username-error').html('Username must be 3-25');
         } else {
-            $('#err-name').html('Username ok');
-            data.name = username.value;
+            $('#register-username-error').html('Username ok');
+            data.name = username.val();
+            validate(username);
         }
-    }
+    })
 
-    email.onkeyup = () => {
-        if (!emailRegex.test(email.value)) {
-            $('#err-email').html('Email must be an email');
+    email.keyup(() => {
+        if (!emailRegex.test(email.val())) {
+            $('#register-email-error').html('Email must be an email');
+            invalidate(email);
         } else {
-            $('#err-email').html('Email ok');
-            data.email = email.value;
+            $('#register-email-error').html('Email ok');
+            data.email = email.val();
+            validate(email);
         }
-    }
+    })
 
-    password.onkeyup = () => {
-        if (password.value.length <= 5 || password.value.length > 15) {
-            $('#err-password').html('Password muste be 5-15');
+    password.keyup(() => {
+        if (password.val().length <= 5 || password.val().length > 15) {
+            $('#register-password-error').html('Password must be 5-15');
+            invalidate(password);
         } else {
-            $('#err-password').html('Password ok');
-            data.password = password.value;
+            $('#register-password-error').html('Password ok');
+            data.password = password.val();
+            validate(password);
         }
-    }
+    })
 
-    passwordRepeat.onkeyup = () => {
-        if (passwordRepeat.value !== password.value) {
-            $('#err-password-repeat').html('Passwords must be the same !');
+    passwordRepeat.keyup(() => {
+        if (passwordRepeat.val() !== password.val()) {
+            $('#register-password-repeat-error').html('Passwords must be the same !');
+            invalidate(passwordRepeat);
         } else {
-            $('#err-password-repeat').html('Passwords ok');
-            data.passwordRepeat = passwordRepeat.value;
+            $('#register-password-repeat-error').html('Passwords ok');
+            data.passwordRepeat = passwordRepeat.val();
+            validate(passwordRepeat);
         }
-    }
+    })
 
     $('.register-form').submit(() => {
         register(data);
-        console.log(data);
         return false;
     });
 });
@@ -57,12 +64,17 @@ function register(data) {
             headers: {
                 "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
             },
-            body: 'data=' + JSON.stringify(data),
+            body: JSON.stringify(data),
             credentials: 'include'
         })
         .then(json)
-        .then(function (data) {
-            console.log('Request succeeded with JSON response', data);
+        .then(function (response) {
+            console.log('Request succeeded with JSON response', response);
+            if (response.status == true) {
+                window.location = 'home';
+            } else if (response.status === false) {
+                displayErrMsg(response);
+            }
         })
         .catch(function (error) {
             console.log('Request failed', error);
@@ -71,4 +83,31 @@ function register(data) {
 
 const json = (response) => {
     return response.json()
+}
+
+const displayErrMsg = (data) => {
+
+    $('.register-errors').html(' ');
+
+    form = $('form[name="register-form"]')[0];   
+    
+    delete data.status;
+
+    for (var i = 0; i < form.elements.length; i++) {
+        form.elements[i].classList.remove('is-valid');
+    }
+    for (var i in data) {
+        form.querySelector(`#register-${i}-error`).innerHTML = data[i];
+        form.querySelector(`#register-${i}-error`).parentElement.querySelector('input').classList.add('is-invalid');
+    }
+}
+
+const validate = (input) => {
+    input[0].classList.add('is-valid');
+    input[0].classList.remove('is-invalid');
+}
+
+const invalidate = (input) => {
+    input[0].classList.add('is-invalid');
+    input[0].classList.remove('is-valid');
 }
