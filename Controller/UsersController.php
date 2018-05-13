@@ -15,27 +15,19 @@ class UsersController extends BaseController
             header('Location: /');
             exit();
         } else {
-            $data = [];
-            if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['passwordRepeat'])) {
-                /*$username = htmlentities($_POST['name']);
-                $email = htmlentities($_POST['email']);
-                $password = htmlentities($_POST['password']);
-                $password_repeat = htmlentities($_POST['password-repeat']);
+            $data = json_decode(file_get_contents('php://input'));
+            if (!empty($data) && isset($data->name) && isset($data->email) && isset($data->password) && isset($data->passwordRepeat)) {
+                $username = htmlentities($data->name);
+                $email = htmlentities($data->email);
+                $password = htmlentities($data->password);
+                $password_repeat = htmlentities($data->passwordRepeat);
                 $users_manager = new UsersManager();
-                $errors = $users_manager->register($username, $email, $password, $password_repeat);
-                $data = [
-                    'errors' => $errors
-                ];*/
+                $errors = $users_manager->register($username, $email, $password, $password_repeat);  
 
-                return var_dump($_POST);
-                
+                return json_encode($errors);
             }
 
-            if (!empty($_POST)) {
-                return var_dump(json_decode($_POST['data'])); // dddddddd
-            }
-
-            return $this->render('register.html.twig', $data);
+            return $this->render('register.html.twig');
         }
     }
 
