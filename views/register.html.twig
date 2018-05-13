@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<form action="/register" class="register-form">
+<form action="/register" class="register-form" name="register-form">
     <fieldset>
         <div class="form-row justify-content-center">
             <div class="form-group col-md-3">
@@ -15,29 +15,29 @@
         <div class="form-row justify-content-center">
             <div class="form-group col-md-3">
                 <label for="username">Username</label>
-                <div class="register-errors" id="err-name"></div>
                 <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                <div class="invalid-feedback ml-5 register-errors" id="register-username-error"></div>
             </div>
         </div>
         <div class="form-row justify-content-center">
             <div class="form-group col-md-3">
                 <label for="email">Email</label>
-                <div class="register-errors" id="err-email"></div>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                <div class="invalid-feedback ml-5 register-errors" id="register-email-error"></div>
             </div>
         </div>
         <div class="form-row justify-content-center">
             <div class="form-group col-md-3">
                 <label for="username">Password</label>
-                <div class="register-errors" id="err-password"></div>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                <div class="invalid-feedback ml-5 register-errors" id="register-password-error"></div>
             </div>
         </div>
         <div class="form-row justify-content-center">
             <div class="form-group col-md-3">
                 <label for="password-repeat">Confirm password</label>
-                <div class="register-errors" id="err-password-repeat"></div>
                 <input type="password" class="form-control" id="password-repeat" name="password-repeat" placeholder="Confirm password">
+                <div class="invalid-feedback ml-5 register-errors" id="register-password-repeat-error"></div>
             </div>
         </div>
         <div class="form-row justify-content-center">
@@ -45,6 +45,4 @@
         </div>
     </fieldset>
 </form>
-
-<div id="err-name"></div>
 {% endblock %}
