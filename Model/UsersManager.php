@@ -33,17 +33,21 @@ class UsersManager {
         $username_taken = $is_username_taken->fetch();
         if ($isEmailUsed['email'] === $email) {
             $errors['email'] = 'You already have an account';
+            $errors['status'] = false;
             $sendForm = false;
         }
 
         if ($username_taken['name'] === $username) {
             $errors['username'] = 'This username is already taken';
+            $errors['status'] = false;
             $sendForm = false;
         }
 
         if ($sendForm === true) {
+            $errors['status'] = true;
             $request->execute();
             self::login($email, $password);
+            return $errors;
         }else {
             return $errors;
         }
@@ -64,8 +68,6 @@ class UsersManager {
                 $_SESSION = $data;
                 $id = $data['id'];
                 $update_last_login = $pdo->query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = '" . $id . "'");
-                header('Location: /');
-                exit();
             } else {
                 $errors['error'] = 'Invalid email or password';
                 return $errors;
