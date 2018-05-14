@@ -37,17 +37,17 @@ class UsersController extends BaseController
             header('Location: /');
             exit();
         } else {
-            $data = [];
-            if (isset($_POST['email']) && isset($_POST['password'])) {
-                $email = htmlentities($_POST['email']);
-                $password = htmlentities($_POST['password']);
+            $data = json_decode(file_get_contents('php://input'));
+            if (!empty($data) && isset($data->email) && isset($data->password)) {
+                $email = htmlentities($data->email);
+                $password = htmlentities($data->password);
                 $account_manager = new UsersManager();
                 $errors = $account_manager->login($email, $password);
-                $data = [
-                    'errors' => $errors,
-                ];
+
+                return json_encode($errors);
             }
-            return $this->render('login.html.twig', $data);
+
+            return $this->render('login.html.twig');
         }
     }
 

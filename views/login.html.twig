@@ -2,8 +2,12 @@
 
 {% block page_title %}Twttr | Login{% endblock %}
 
+{% block assets %}
+<script src="/assets/js/forms.js"></script>
+{% endblock %}
+
 {% block content %}
-<form action="/login" method="POST">
+<form action="/login" class="login-form" name="login-form">
     <fieldset>
         <div class="form-row justify-content-center">
             <div class="form-group col-md-3">
@@ -14,12 +18,14 @@
             <div class="form-group col-md-3">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                <div class="invalid-feedback login-errors" id="login-email-error"></div>
             </div>
         </div>
         <div class="form-row justify-content-center">
             <div class="form-group col-md-3">
                 <label for="username">Password</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                <div class="invalid-feedback login-errors" id="login-password-error"></div>
             </div>
         </div>
         <div class="form-row justify-content-center">

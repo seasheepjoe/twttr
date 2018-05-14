@@ -55,6 +55,37 @@ window.addEventListener('load', () => {
         register(data);
         return false;
     });
+
+    const login_form = document.querySelector('.login-form');
+    const login_email = login_form.querySelector('#email').value;
+    const login_password = login_form.querySelector('#password').value;
+
+    email.keyup(() => {
+        if (!emailRegex.test(email.val())) {
+            $('#register-email-error').html('Email must be an email');
+            invalidate(email);
+        } else {
+            $('#register-email-error').html('Email ok');
+            data.email = email.val();
+            validate(email);
+        }
+    })
+
+    password.keyup(() => {
+        if (password.val().length <= 5 || password.val().length > 15) {
+            $('#register-password-error').html('Password must be 5-15');
+            invalidate(password);
+        } else {
+            $('#register-password-error').html('Password ok');
+            data.password = password.val();
+            validate(password);
+        }
+    })
+
+    $('.login-form').submit(() => {
+        login(data);
+        return false;
+    })
 });
 
 function register(data) {
@@ -73,7 +104,31 @@ function register(data) {
             if (response.status == true) {
                 window.location = 'home';
             } else if (response.status === false) {
-                displayErrMsg(response);
+                displayErrMsgRegister(response);
+            }
+        })
+        .catch(function (error) {
+            console.log('Request failed', error);
+        });
+}
+
+function login(data) {
+    var url = '/login';
+    fetch(url, {
+            method: 'post',
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: JSON.stringify(data),
+            credentials: 'include'
+        })
+        .then(json)
+        .then(function (response) {
+            console.log('Request succeeded with JSON response', response);
+            if (response.status == true) {
+                window.location = 'home';
+            } else if (response.status === false) {
+                displayErrMsgLogin(response);
             }
         })
         .catch(function (error) {
@@ -85,7 +140,7 @@ const json = (response) => {
     return response.json()
 }
 
-const displayErrMsg = (data) => {
+const displayErrMsgRegister = (data) => {
 
     $('.register-errors').html(' ');
 
@@ -96,9 +151,29 @@ const displayErrMsg = (data) => {
     for (var i = 0; i < form.elements.length; i++) {
         form.elements[i].classList.remove('is-valid');
     }
+
     for (var i in data) {
         form.querySelector(`#register-${i}-error`).innerHTML = data[i];
         form.querySelector(`#register-${i}-error`).parentElement.querySelector('input').classList.add('is-invalid');
+    }
+}
+
+const displayErrMsgLogin = (data) => {
+    
+    $('.login-errors').html(' ');
+
+    form = $('form[name="login-form"]')[0];
+    
+    
+    delete data.status;
+
+    for (var i = 0; i < form.elements.length; i++) {
+        form.elements[i].classList.remove('is-valid');
+    }
+
+    for (var i in data) {
+        form.querySelector(`#login-${i}-error`).innerHTML = data[i];
+        form.querySelector(`#login-${i}-error`).parentElement.querySelector('input').classList.add('is-invalid');
     }
 }
 

@@ -61,15 +61,19 @@ class UsersManager {
         $request = $pdo->query("SELECT * FROM `users` WHERE `email` ='" . $email . "'");
         $data = $request->fetch(\PDO::FETCH_ASSOC);
         if (empty($data)) {
-            $errors['error'] = 'Invalid email or password';
+            $errors['email'] = 'Invalid email';
+            $errors['status'] = false;
             return $errors;
         }else {
             if (password_verify($password, $data['password'])) {
                 $_SESSION = $data;
                 $id = $data['id'];
                 $update_last_login = $pdo->query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = '" . $id . "'");
+                $errors['status'] = true;
+                return $errors;
             } else {
-                $errors['error'] = 'Invalid email or password';
+                $errors['password'] = 'Invalid password';
+                $errors['status'] = false;
                 return $errors;
             }
         }   
