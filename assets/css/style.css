@@ -93,3 +93,7 @@ h4 a {
 .rtwtt:hover, .fav:hover {
     cursor: pointer;
 }
+
+#pic-404 {
+    width: 40%;
+}

@@ -5,7 +5,7 @@
 {% block content %}
 <h1>PROFILE</h1>
 
-<div class="modal fade mt-5" id="editProfilePic" tabindex="-1" role="dialog" aria-labelledby="editProfilePicLabel" aria-hidden="true">
+<div class="modal fade mt-5" id="editProfilePic" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -19,7 +19,7 @@
                     <div class="input-group mb-3">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="pic" id="profilepic">
-                            <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                            <label class="custom-file-label">Choose file</label>
                         </div>
                     </div>
                 </div>
@@ -35,9 +35,9 @@
     <div class="col-2">
         <div class="img-wrapper d-flex justify-content-center align-items-center">        
         {% if user.pp_url is not empty %}
-            <img data-toggle="modal" data-target="#editProfilePic" src="{{ user.pp_url }}" class="pp mr-3 ml-3">
+            <img data-toggle="modal" data-target="#editProfilePic" src="{{ user.pp_url }}" class="pp mr-3 ml-3" alt="{{ user.name }} profile picture">
         {% else %}
-            <img data-toggle="modal" data-target="#editProfilePic" src="../assets/pp/default_pp.png" class="pp mr-3 ml-3">
+            <img data-toggle="modal" data-target="#editProfilePic" src="../assets/pp/default_pp.png" class="pp mr-3 ml-3" alt="Default profile picture">
         {% endif %}
             <div class="img-desc">
                 <i class="fas fa-pencil-alt fa-lg"></i>                
@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="col-4 d-flex flex-column justify-content-center">
-        <h4>{{ user.name }}&nbsp;<small><a href="">@{{ user.name }}</small></a></h4>
+        <h4>{{ user.name }}&nbsp;<small><a href="">@{{ user.name }}</a></small></h4>
         <h4>{{ user.email }}</h4>
     </div>
     <div class="col-2"></div>
