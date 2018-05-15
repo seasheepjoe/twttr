@@ -28,4 +28,36 @@
                         </div>
                     </td>
                 </tr>
-                {% endfor %}
+    {% endfor %}
+
+    {% if last_twtt is defined %}
+    <tr class="">
+                    <td class="col-md-6">
+                        <div class="media pr-4 pl-4 pt-4 pb-3">
+                            <a href="/profile/{{last_twtt.author_name}}">
+                            {% if last_twtt.pp_url is not empty %}
+                                <img src="{{ last_twtt.pp_url }}" alt="{{ last_twtt.author_name }} profile picture" class="align-self-start twtt-thumbnail mr-3 ml-3">
+                            {% else %}
+                                <img src="/assets/pp/default_pp.png" alt="PP-Pro" class="align-self-start twtt-thumbnail mr-3 ml-3">
+                            {% endif %}
+                            </a>
+                            <div class="media-body position-relative">
+                                {% if last_twtt.rt_author_name is not null %}
+                                <small class="text-muted position-absolute rtwtt-msg">{{ last_twtt.rt_author_name }} rtwtted :</small>
+                                {% endif %}
+                                <h5 class="mt-0 d-flex justify-content-between">
+                                    <a href="/profile/{{last_twtt.author_name}}" class="text-dark">{{ last_twtt.author_name }}</a>
+                                    <span class="last-date" data-last="{{ last_twtt.post_time|date("Y-m-d H:i:s") }}">{% if last_twtt.rt_author_name is not null %}{{ last_twtt.post_time|date("d/m/Y H:i") }}{% else %}{{ last_twtt.date|date("d/m/Y H:i") }}{% endif %}</span>
+                                </h5>
+                                <p>{{last_twtt.content|nl2br}}</p>
+                                <div class="media-footer d-flex justify-content-center">
+                                    <div class="actions d-flex justify-content-around">
+                                        <div class="rtwtt {% if last_twtt.rtwtted == true %}text-success{% endif %}" data-twtt={{ last_twtt.id }}><span class="rt-nbr">{{ last_twtt.rtwtts }}</span><i class="fas fa-retweet"></i></div>
+                                        <div class="fav {% if last_twtt.faved == true %}text-warning{% endif %}" data-twtt={{ last_twtt.id }}><span class="fav-nbr">{{ last_twtt.favs }}</span><i class="fas fa-star"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+    {% endif %}
