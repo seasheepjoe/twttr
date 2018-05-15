@@ -77,7 +77,7 @@ class UsersManager {
                 $id = $data['id'];
                 $update_last_login = $pdo->query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = '" . $id . "'");
                 header('Location: /');
-                file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . " registered on twttr !\n", FILE_APPEND);
+                file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " registered on twttr !\n", FILE_APPEND);
                 exit();
             } else {
                 $errors['error'] = 'Invalid email or password';
@@ -103,7 +103,7 @@ class UsersManager {
                 $request->execute();
                 $_SESSION['pp_url'] = $new_pp;
                 header('Location: /profile');
-                file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . " uploaded a new profile picture !\n", FILE_APPEND);
+                file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " uploaded a new profile picture !\n", FILE_APPEND);
                 exit();
             } else {
                     $errors['upload'] = 'Error uploading file please retry';
