@@ -54,6 +54,7 @@ class UsersManager {
 
         if ($sendForm === true) {
             $request->execute();
+            file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $username . " registered on twttr !\n", FILE_APPEND);
             self::login($email, $password);
         }else {
             return $errors;
@@ -76,6 +77,7 @@ class UsersManager {
                 $id = $data['id'];
                 $update_last_login = $pdo->query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = '" . $id . "'");
                 header('Location: /');
+                file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . " registered on twttr !\n", FILE_APPEND);
                 exit();
             } else {
                 $errors['error'] = 'Invalid email or password';
@@ -101,6 +103,7 @@ class UsersManager {
                 $request->execute();
                 $_SESSION['pp_url'] = $new_pp;
                 header('Location: /profile');
+                file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . " uploaded a new profile picture !\n", FILE_APPEND);
                 exit();
             } else {
                     $errors['upload'] = 'Error uploading file please retry';
@@ -119,6 +122,7 @@ class UsersManager {
         $request->bindParam(':follower', $follower);
         $request->bindParam(':followed', $followed);
         $request->execute();
+        file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $follower . " followed user $followed !\n", FILE_APPEND);
     }
 
     public function unfollow($follower, $followed)
@@ -130,6 +134,7 @@ class UsersManager {
         $request->bindParam(':follower', $follower);
         $request->bindParam(':followed', $followed);
         $request->execute();
+        file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $follower . " unfollowed user $followed !\n", FILE_APPEND);
     }
 
     public function isAlreadyFollowed($follower, $followed)
