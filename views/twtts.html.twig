@@ -15,12 +15,12 @@
                 {% endif %}
                 <h5 class="mt-0 d-flex justify-content-between">
                     <a href="/profile/{{twtt.author_name}}" class="text-dark">{{ twtt.author_name }}</a>
-                    <span>{% if twtt.rt_author_name is not null %}{{ twtt.post_time|date("d/m/Y H:i") }}{% else %}{{ twtt.date|date("d/m/Y H:i") }}{% endif %}</span>
+                    <span class="last-date" data-last="{{ twtt.post_time|date("Y-m-d H:i:s") }}">{% if twtt.rt_author_name is not null %}{{ twtt.post_time|date("d/m/Y H:i") }}{% else %}{{ twtt.date|date("d/m/Y H:i") }}{% endif %}</span>
                 </h5>
                 <p>{{twtt.content|nl2br}}</p>
                 <div class="media-footer d-flex justify-content-center">
                     <div class="actions d-flex justify-content-around">
-                        <div class="rtwtt {% if twtt.rtwtted == true %}text-success{% endif %}" data-twtt={{ twtt.id }} data-original-twtt={{ twtt.original_twtt }}><span class="rt-nbr">{{ twtt.rtwtts }}</span><i class="fas fa-retweet"></i></div>
+                        <div class="rtwtt {% if twtt.rtwtted == true %}text-success{% endif %}" data-twtt={{ twtt.id }} {% if twtt.original_twtt is defined %} data-original-twtt={{ twtt.original_twtt }}{% endif %}><span class="rt-nbr">{{ twtt.rtwtts }}</span><i class="fas fa-retweet"></i></div>
                         <div class="fav {% if twtt.faved == true %}text-warning{% endif %}" data-twtt={{ twtt.id }}><span class="fav-nbr">{{ twtt.favs }}</span><i class="fas fa-star"></i></div>
                     </div>
                 </div>
