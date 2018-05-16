@@ -1,6 +1,6 @@
 window.addEventListener('load', () => {
     $('.rtwtt').on('click', function (e) {
-        if (this.dataset.originalTwtt != '') {
+        if (typeof this.dataset.originalTwtt != 'undefined') {
             id = this.dataset.originalTwtt;
         } else {
             id = this.dataset.twtt;
