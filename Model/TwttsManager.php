@@ -48,7 +48,12 @@ class TwttsManager
     {
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
-        $request = $pdo->query("SELECT * FROM `twtts` WHERE twtts.content = '$content' AND twtts.rt = 1 AND twtts.rt_author = $rt_author");
+        $request = $pdo->prepare("SELECT * FROM `twtts` WHERE twtts.content = :content AND twtts.rt = 1 AND twtts.rt_author = :rt_author");
+        $request->bindParam(':content', $content);
+        $request->bindParam(':rt_author', $rt_author);
+
+        $request->execute();
+        
         return $request->fetch(\PDO::FETCH_ASSOC);
     }
 
