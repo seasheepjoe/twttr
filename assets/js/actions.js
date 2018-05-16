@@ -1,5 +1,5 @@
 window.addEventListener('load', () => {
-    $('.rtwtt').click(function (e) {
+    $('.rtwtt').on('click', function (e) {
         if (this.dataset.originalTwtt != '') {
             id = this.dataset.originalTwtt;
         } else {
@@ -29,7 +29,7 @@ window.addEventListener('load', () => {
             });
     });
 
-    $('.fav').click(function (e) {
+    $('.fav').on('click', function (e) {
         id = this.dataset.twtt;
         var url = '/fav?&id=' + id;
         fetch(url, {

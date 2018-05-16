@@ -20,7 +20,7 @@
                                 <p>{{twtt.content|nl2br}}</p>
                                 <div class="media-footer d-flex justify-content-center">
                                     <div class="actions d-flex justify-content-around">
-                                        <div class="rtwtt {% if twtt.rtwtted == true %}text-success{% endif %}" data-twtt={{ twtt.id }}><span class="rt-nbr">{{ twtt.rtwtts }}</span><i class="fas fa-retweet"></i></div>
+                                        <div class="rtwtt {% if twtt.rtwtted == true %}text-success{% endif %}" data-twtt={{ twtt.id }} {% if twtt.original_twtt != "" %} data-original-twtt={{ twtt.original_twtt }}{% endif %}><span class="rt-nbr">{{ twtt.rtwtts }}</span><i class="fas fa-retweet"></i></div>
                                         <div class="fav {% if twtt.faved == true %}text-warning{% endif %}" data-twtt={{ twtt.id }}><span class="fav-nbr">{{ twtt.favs }}</span><i class="fas fa-star"></i></div>
                                     </div>
                                 </div>
@@ -52,7 +52,7 @@
                                 <p>{{last_twtt.content|nl2br}}</p>
                                 <div class="media-footer d-flex justify-content-center">
                                     <div class="actions d-flex justify-content-around">
-                                        <div class="rtwtt {% if last_twtt.rtwtted == true %}text-success{% endif %}" data-twtt={{ last_twtt.id }}><span class="rt-nbr">{{ last_twtt.rtwtts }}</span><i class="fas fa-retweet"></i></div>
+                                        <div class="rtwtt {% if last_twtt.rtwtted == true %}text-success{% endif %}" data-twtt={{ last_twtt.id }} {% if last_twtt.original_twtt != "" %} data-original-twtt={{ last_twtt.original_twtt }}{% endif %}><span class="rt-nbr">{{ last_twtt.rtwtts }}</span><i class="fas fa-retweet"></i></div>
                                         <div class="fav {% if last_twtt.faved == true %}text-warning{% endif %}" data-twtt={{ last_twtt.id }}><span class="fav-nbr">{{ last_twtt.favs }}</span><i class="fas fa-star"></i></div>
                                     </div>
                                 </div>
