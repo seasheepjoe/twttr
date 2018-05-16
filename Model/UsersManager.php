@@ -69,7 +69,7 @@ class UsersManager {
                 $_SESSION = $data;
                 $id = $data['id'];
                 $update_last_login = $pdo->query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = '" . $id . "'");
-                file_put_contents($_SERVER['DOCUMENT_ROOT']. '/logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " registered on twttr !\n", FILE_APPEND);
+                file_put_contents($_SERVER['DOCUMENT_ROOT']. '/logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " logged in on twttr !\n", FILE_APPEND);
                 $errors->status = true;
                 return $errors;
             } else {
