@@ -46,7 +46,7 @@ class UsersManager {
         if ($sendForm === true) {
             $errors['status'] = true;
             $request->execute();
-            file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $username . " registered on twttr !\n", FILE_APPEND);
+            file_put_contents($_SERVER['DOCUMENT_ROOT']. '/logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $username . " registered on twttr !\n", FILE_APPEND);
             self::login($email, $password);
             return $errors;
         }else {
@@ -71,7 +71,7 @@ class UsersManager {
                 $id = $data['id'];
                 $update_last_login = $pdo->query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = '" . $id . "'");
                 header('Location: /');
-                file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " registered on twttr !\n", FILE_APPEND);
+                file_put_contents($_SERVER['DOCUMENT_ROOT']. '/logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " registered on twttr !\n", FILE_APPEND);
                 $errors['status'] = true;
                 return $errors;
             } else {
@@ -99,7 +99,7 @@ class UsersManager {
                 $request->execute();
                 $_SESSION['pp_url'] = $new_pp;
                 header('Location: /profile');
-                file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " uploaded a new profile picture !\n", FILE_APPEND);
+                file_put_contents($_SERVER['DOCUMENT_ROOT']. '/logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " uploaded a new profile picture !\n", FILE_APPEND);
                 exit();
             } else {
                     $errors['upload'] = 'Error uploading file please retry';
@@ -118,7 +118,7 @@ class UsersManager {
         $request->bindParam(':follower', $follower);
         $request->bindParam(':followed', $followed);
         $request->execute();
-        file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $follower . " followed user $followed !\n", FILE_APPEND);
+        file_put_contents($_SERVER['DOCUMENT_ROOT']. '/logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $follower . " followed user $followed !\n", FILE_APPEND);
     }
 
     public function unfollow($follower, $followed)
@@ -130,7 +130,7 @@ class UsersManager {
         $request->bindParam(':follower', $follower);
         $request->bindParam(':followed', $followed);
         $request->execute();
-        file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $follower . " unfollowed user $followed !\n", FILE_APPEND);
+        file_put_contents($_SERVER['DOCUMENT_ROOT']. '/logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $follower . " unfollowed user $followed !\n", FILE_APPEND);
     }
 
     public function isAlreadyFollowed($follower, $followed)

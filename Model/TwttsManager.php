@@ -21,7 +21,7 @@ class TwttsManager
         isset($date) ? : $date = date("Y-m-d H:i:s");
         $request->bindParam(':date', $date);
         $request->execute();
-        file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " twtted\n", FILE_APPEND);
+        file_put_contents($_SERVER['DOCUMENT_ROOT']. '/logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " twtted\n", FILE_APPEND);
     }
 
     public function unsetTwtt($twtt_id)
@@ -31,13 +31,13 @@ class TwttsManager
         $request = $pdo->prepare("DELETE FROM `twtts` WHERE `twtts`.`id` = $twtt_id");
 
         $request->execute();
-        file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " deleted a twtt\n", FILE_APPEND);
+        file_put_contents($_SERVER['DOCUMENT_ROOT']. '/logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " deleted a twtt\n", FILE_APPEND);
     }
 
     public function setRT($twtt_id, $rtwtter)
     {
         $twtt = $this->getTwtt($twtt_id);
-        file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " rtwtted a twtt\n", FILE_APPEND);
+        file_put_contents($_SERVER['DOCUMENT_ROOT']. '/logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " rtwtted a twtt\n", FILE_APPEND);
         return $this->setTwtt($twtt['author'], $twtt['content'], $twtt['date'], $rtwtter, $twtt['id']);
     }
 
@@ -45,7 +45,7 @@ class TwttsManager
     {
         $twtt = $this->getTwtt($twtt_id);
         $rt = $this->getRT($twtt['content'], $rtwtter);
-        file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " deleted a rtwtt\n", FILE_APPEND);
+        file_put_contents($_SERVER['DOCUMENT_ROOT']. '/logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " deleted a rtwtt\n", FILE_APPEND);
         return $this->unsetTwtt($rt['id']);
     }
 
@@ -178,7 +178,7 @@ class TwttsManager
         $burnReaction = $pdo->prepare("DELETE FROM $type WHERE `twtt_id` = :twtt_id AND `user_id` = :user_id");
         $burnReaction->bindParam(':user_id', $user_id);
         $burnReaction->bindParam(':twtt_id', $twtt_id);
-        file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " reacted to a rtwtt with a $type\n", FILE_APPEND);
+        file_put_contents($_SERVER['DOCUMENT_ROOT']. '/logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " reacted to a rtwtt with a $type\n", FILE_APPEND);
         if (empty($ifReactionExists->fetchAll())) {
             $request->execute();
             if ($type == 'rtwtt')

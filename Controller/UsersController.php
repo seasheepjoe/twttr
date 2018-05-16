@@ -73,7 +73,7 @@ class UsersController extends BaseController
                 $errors = [];
                 if($type !== 'image/png' && $type !== 'image/jpg' && $type !== 'image/jpeg') {
                     $errors['type'] = 'You can only upload png/jpg/jpeg files';
-                    error_log($_SESSION['name']. " tried to upload an illegal file !", 0, "logs/security.log");
+                    error_log($_SESSION['name']. " tried to upload an illegal file !", 0, $_SERVER['DOCUMENT_ROOT']. "/logs/security.log");
                 } else {
                     $manager = new UsersManager;
                     $manager->changePic($name, $tmp_name, $type, $size);
