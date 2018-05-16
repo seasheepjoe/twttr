@@ -12,15 +12,15 @@ class UsersController extends BaseController
     public function registerAction() 
     {
         if (isset($_SESSION['name'])) {
-            header('Location: /');
-            exit();
+            return header('Location: /');
         } else {
-            $data = json_decode(file_get_contents('php://input'));
-            if (!empty($data) && isset($data->name) && isset($data->email) && isset($data->password) && isset($data->passwordRepeat)) {
-                $username = htmlentities($data->name);
-                $email = htmlentities($data->email);
-                $password = htmlentities($data->password);
-                $password_repeat = htmlentities($data->passwordRepeat);
+            $a = isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['passwordRepeat']);
+            // return json_encode(['a' => $a]);
+            if (isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['passwordRepeat'])) {
+                $username = htmlentities($_POST['username']);
+                $email = htmlentities($_POST['email']);
+                $password = htmlentities($_POST['password']);
+                $password_repeat = htmlentities($_POST['passwordRepeat']);
                 $users_manager = new UsersManager();
                 $errors = $users_manager->register($username, $email, $password, $password_repeat);  
 
@@ -37,10 +37,9 @@ class UsersController extends BaseController
             header('Location: /');
             exit();
         } else {
-            $data = json_decode(file_get_contents('php://input'));
-            if (!empty($data) && isset($data->email) && isset($data->password)) {
-                $email = htmlentities($data->email);
-                $password = htmlentities($data->password);
+            if (isset($_POST['email']) && isset($_POST['password'])) {
+                $email = htmlentities($_POST['email']);
+                $password = htmlentities($_POST['password']);
                 $account_manager = new UsersManager();
                 $errors = $account_manager->login($email, $password);
 

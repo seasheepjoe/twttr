@@ -8,11 +8,12 @@ class UsersManager {
 
     public function register($username, $email, $password, $password_repeat) 
     {
-        $errors = [];
-        $sendForm = true;
+        $errors = new \stdClass;
+        $errors->status = true;
 
         if ($password !== $password_repeat) {
-            $sendForm = false;
+            $errors->password = 'Passwords do not match';
+            $errors->status = false;
         }
 
         $dbManager = DBManager::getInstance();
@@ -32,19 +33,16 @@ class UsersManager {
         $is_username_taken->execute();
         $username_taken = $is_username_taken->fetch();
         if ($isEmailUsed['email'] === $email) {
-            $errors['email'] = 'You already have an account';
-            $errors['status'] = false;
-            $sendForm = false;
+            $errors->email = 'You already have an account';
+            $errors->status = false;
         }
 
         if ($username_taken['name'] === $username) {
-            $errors['username'] = 'This username is already taken';
-            $errors['status'] = false;
-            $sendForm = false;
+            $errors->username = 'This username is already taken';
+            $errors->status = false;
         }
 
-        if ($sendForm === true) {
-            $errors['status'] = true;
+        if ($errors->status === true) {
             $request->execute();
             file_put_contents($_SERVER['DOCUMENT_ROOT']. '/logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $username . " registered on twttr !\n", FILE_APPEND);
             self::login($email, $password);
@@ -56,27 +54,27 @@ class UsersManager {
 
     public function login($email, $password)
     {
-        $errors = [];
+        $errors = new \stdClass;
+        $errors->status = true;
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
         $request = $pdo->query("SELECT * FROM `users` WHERE `email` ='" . $email . "'");
         $data = $request->fetch(\PDO::FETCH_ASSOC);
         if (empty($data)) {
-            $errors['email'] = 'Invalid email';
-            $errors['status'] = false;
+            $errors->email = 'Invalid email';
+            $errors->status = false;
             return $errors;
         }else {
             if (password_verify($password, $data['password'])) {
                 $_SESSION = $data;
                 $id = $data['id'];
                 $update_last_login = $pdo->query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = '" . $id . "'");
-                header('Location: /');
                 file_put_contents($_SERVER['DOCUMENT_ROOT']. '/logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " registered on twttr !\n", FILE_APPEND);
-                $errors['status'] = true;
+                $errors->status = true;
                 return $errors;
             } else {
-                $errors['password'] = 'Invalid password';
-                $errors['status'] = false;
+                $errors->password = 'Invalid password';
+                $errors->status = false;
                 return $errors;
             }
         }   

@@ -1,188 +1,67 @@
 window.addEventListener('load', () => {
+    var login = document.querySelector('form[name="login-form"]') ? document.querySelector('form[name="login-form"]') : null;
+    if (login != null) {
+        login.addEventListener('submit', (e) => {
+            e.preventDefault();
+            $.ajax({
+                method: 'post',
+                url: e.target.action,
+                data: {
+                    email: e.target.elements['email'].value,
+                    password: e.target.elements['password'].value
+                },
+                dataType: 'json',
+                success: (response) => {
+                    if (response.status == true) {
+                        window.location = '/';
+                    } else if (response.status === false) {
+                        displayErrMsg('login', response);
+                    }
+                },
+                error: (err, response) => {
+                    console.log(err);
+                }
+            });
+        })
+    }
 
-    const data = {};
-    const username = $('#username');
-    const email = $('#email');
-    const password = $('#password');
-    const passwordRepeat = $('#password-repeat');
-    const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-
-    username.keyup(() => {
-        if (username.val().length <= 2 || username.val().length > 25) {
-            invalidate(username);
-            $('#register-username-error').html('Username must be 3-25');
-        } else {
-            $('#register-username-error').html('Username ok');
-            data.name = username.val();
-            validate(username);
-        }
-    })
-
-    email.keyup(() => {
-        if (!emailRegex.test(email.val())) {
-            $('#register-email-error').html('Email must be an email');
-            invalidate(email);
-        } else {
-            $('#register-email-error').html('Email ok');
-            data.email = email.val();
-            validate(email);
-        }
-    })
-
-    password.keyup(() => {
-        if (password.val().length <= 5 || password.val().length > 15) {
-            $('#register-password-error').html('Password must be 5-15');
-            invalidate(password);
-        } else {
-            $('#register-password-error').html('Password ok');
-            data.password = password.val();
-            validate(password);
-        }
-    })
-
-    passwordRepeat.keyup(() => {
-        if (passwordRepeat.val() !== password.val()) {
-            $('#register-password-repeat-error').html('Passwords must be the same !');
-            invalidate(passwordRepeat);
-        } else {
-            $('#register-password-repeat-error').html('Passwords ok');
-            data.passwordRepeat = passwordRepeat.val();
-            validate(passwordRepeat);
-        }
-    })
-
-    $('.register-form').submit(() => {
-        register(data);
-        return false;
-    });
-
-    const login_form = document.querySelector('.login-form');
-    const login_email = login_form.querySelector('#email').value;
-    const login_password = login_form.querySelector('#password').value;
-
-    email.keyup(() => {
-        if (!emailRegex.test(email.val())) {
-            $('#register-email-error').html('Email must be an email');
-            invalidate(email);
-        } else {
-            $('#register-email-error').html('Email ok');
-            data.email = email.val();
-            validate(email);
-        }
-    })
-
-    password.keyup(() => {
-        if (password.val().length <= 5 || password.val().length > 15) {
-            $('#register-password-error').html('Password must be 5-15');
-            invalidate(password);
-        } else {
-            $('#register-password-error').html('Password ok');
-            data.password = password.val();
-            validate(password);
-        }
-    })
-
-    $('.login-form').submit(() => {
-        login(data);
-        return false;
-    })
+    var register = document.querySelector('form[name="register-form"]') ? document.querySelector('form[name="register-form"]') : null;
+    if (register != null) {
+        register.addEventListener('submit', (e) => {
+            e.preventDefault();
+            $.ajax({
+                method: 'post',
+                url: e.target.action,
+                data: {
+                    username: e.target.elements['username'].value,
+                    email: e.target.elements['email'].value,
+                    password: e.target.elements['password'].value,
+                    passwordRepeat: e.target.elements['password-repeat'].value,
+                },
+                dataType: 'json',
+                success: (response) => {
+                    if (response.status == true) {
+                        window.location = '/';
+                    } else if (response.status === false) {
+                        displayErrMsg('register', response);
+                    }
+                },
+                error: (err, response) => {
+                    console.log(err, response);
+                }
+            });
+        })
+    }
 });
 
-function register(data) {
-    var url = '/register';
-    fetch(url, {
-            method: 'post',
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
-            body: JSON.stringify(data),
-            credentials: 'include'
-        })
-        .then(json)
-        .then(function (response) {
-            console.log('Request succeeded with JSON response', response);
-            if (response.status == true) {
-                window.location = 'home';
-            } else if (response.status === false) {
-                displayErrMsgRegister(response);
-            }
-        })
-        .catch(function (error) {
-            console.log('Request failed', error);
-        });
-}
-
-function login(data) {
-    var url = '/login';
-    fetch(url, {
-            method: 'post',
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
-            body: JSON.stringify(data),
-            credentials: 'include'
-        })
-        .then(json)
-        .then(function (response) {
-            console.log('Request succeeded with JSON response', response);
-            if (response.status == true) {
-                window.location = 'home';
-            } else if (response.status === false) {
-                displayErrMsgLogin(response);
-            }
-        })
-        .catch(function (error) {
-            console.log('Request failed', error);
-        });
-}
-
-const json = (response) => {
-    return response.json()
-}
-
-const displayErrMsgRegister = (data) => {
-
-    $('.register-errors').html(' ');
-
-    form = $('form[name="register-form"]')[0];   
-    
+const displayErrMsg = (action, data) => {
+    form = document.querySelector(`form[name="${action}-form"]`);
     delete data.status;
-
     for (var i = 0; i < form.elements.length; i++) {
-        form.elements[i].classList.remove('is-valid');
+        form.elements[i].classList.remove('is-invalid');
     }
-
     for (var i in data) {
-        form.querySelector(`#register-${i}-error`).innerHTML = data[i];
-        form.querySelector(`#register-${i}-error`).parentElement.querySelector('input').classList.add('is-invalid');
+        form.querySelector(`#${action}-${i}-error`).innerHTML = data[i];
+        form.querySelector(`#${action}-${i}-error`).parentElement.querySelector('input').classList.add('is-invalid');
     }
-}
-
-const displayErrMsgLogin = (data) => {
-    
-    $('.login-errors').html(' ');
-
-    form = $('form[name="login-form"]')[0];
-    
-    
-    delete data.status;
-
-    for (var i = 0; i < form.elements.length; i++) {
-        form.elements[i].classList.remove('is-valid');
-    }
-
-    for (var i in data) {
-        form.querySelector(`#login-${i}-error`).innerHTML = data[i];
-        form.querySelector(`#login-${i}-error`).parentElement.querySelector('input').classList.add('is-invalid');
-    }
-}
-
-const validate = (input) => {
-    input[0].classList.add('is-valid');
-    input[0].classList.remove('is-invalid');
-}
-
-const invalidate = (input) => {
-    input[0].classList.add('is-invalid');
-    input[0].classList.remove('is-valid');
 }
