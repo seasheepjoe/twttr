@@ -5,8 +5,9 @@ window.addEventListener('load', () => {
 
     $('.new-twtt').submit(() => {
         data.content = twttContent.val();
-        console.log(twttContent.val());
         newTwtt(data);
+
+        $('#twtt-content').val('');
         return false;
     })
 });
@@ -26,6 +27,7 @@ function newTwtt (data) {
             console.log('Request succeeded with JSON response', response);
             if (response.status == true) {
                 $('#twtts').prepend(response.html);
+                $('#close-modal').trigger('click');
             } else if (response.status === false) {
                 console.log(response);
             }
