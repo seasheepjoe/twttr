@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost:3306
--- Généré le :  Mar 15 Mai 2018 à 21:46
+-- Généré le :  Mer 16 Mai 2018 à 22:46
 -- Version du serveur :  5.7.22-0ubuntu0.17.10.1
 -- Version de PHP :  7.1.17-1+ubuntu17.10.1+deb.sury.org+1
 
@@ -45,7 +45,8 @@ INSERT INTO `favs` (`id`, `twtt_id`, `user_id`) VALUES
 (24, 127, 25),
 (25, 130, 36),
 (26, 133, 43),
-(28, 139, 46);
+(28, 139, 46),
+(30, 241, 1);
 
 -- --------------------------------------------------------
 
@@ -114,7 +115,10 @@ INSERT INTO `rtwtt` (`id`, `twtt_id`, `user_id`) VALUES
 (69, 133, 43),
 (70, 134, 43),
 (71, 135, 43),
-(72, 136, 43);
+(72, 136, 43),
+(83, 182, 43),
+(84, 192, 43),
+(97, 224, 47);
 
 -- --------------------------------------------------------
 
@@ -224,13 +228,50 @@ INSERT INTO `twtts` (`id`, `rt`, `rt_author`, `original_twtt`, `author`, `conten
 (129, NULL, NULL, NULL, '35', 'yalalal', '2018-05-12 16:29:46', '2018-05-12 16:29:46'),
 (130, NULL, NULL, NULL, '36', 'rtyui', '2018-05-12 16:48:29', '2018-05-12 16:48:29'),
 (132, 1, 36, 130, '36', 'rtyui', '2018-05-12 16:48:29', '2018-05-12 16:48:34'),
-(133, NULL, NULL, NULL, '43', 'coucouuuuu ', '2018-05-14 12:20:28', '2018-05-14 14:20:28'),
-(134, 1, 43, NULL, '43', 'coucouuuuu ', '2018-05-14 12:20:28', '2018-05-14 14:20:33'),
-(135, 1, 43, NULL, '43', 'coucouuuuu ', '2018-05-14 12:20:28', '2018-05-14 14:20:47'),
-(136, 1, 43, NULL, '43', 'coucouuuuu ', '2018-05-14 12:20:28', '2018-05-14 14:21:02'),
-(137, 1, 43, NULL, '43', 'coucouuuuu ', '2018-05-14 12:20:28', '2018-05-14 14:21:06'),
-(138, NULL, NULL, NULL, '46', 'HEY dzdzdzdz', '2018-05-14 14:53:50', '2018-05-14 16:53:51'),
-(147, 1, 46, NULL, '46', 'HEY dzdzdzdz', '2018-05-14 14:53:50', '2018-05-14 16:55:54');
+(163, NULL, NULL, NULL, '43', 'lol hey\n', '2018-05-15 20:58:17', '2018-05-15 22:58:17'),
+(164, NULL, NULL, NULL, '43', 'Hey', '2018-05-15 21:00:15', '2018-05-15 23:00:15'),
+(165, NULL, NULL, NULL, '43', 'dz', '2018-05-15 21:02:48', '2018-05-15 23:02:48'),
+(166, NULL, NULL, NULL, '43', 'line', '2018-05-15 21:04:00', '2018-05-15 23:04:00'),
+(167, NULL, NULL, NULL, '43', 'dzdzd', '2018-05-15 21:05:24', '2018-05-15 23:05:24'),
+(168, NULL, NULL, NULL, '43', 'dzdzdz', '2018-05-15 21:06:05', '2018-05-15 23:06:04'),
+(169, NULL, NULL, NULL, '43', 'ppppppppp', '2018-05-15 21:06:33', '2018-05-15 23:06:33'),
+(170, NULL, NULL, NULL, '43', 'dzdz', '2018-05-15 21:07:31', '2018-05-15 23:07:31'),
+(171, NULL, NULL, NULL, '43', 'a', '2018-05-15 21:08:02', '2018-05-15 23:08:01'),
+(172, NULL, NULL, NULL, '43', 'z', '2018-05-15 21:09:03', '2018-05-15 23:09:03'),
+(173, NULL, NULL, NULL, '43', 'e', '2018-05-15 21:09:55', '2018-05-15 23:09:55'),
+(174, NULL, NULL, NULL, '43', 'r', '2018-05-15 21:11:14', '2018-05-15 23:11:13'),
+(175, NULL, NULL, NULL, '43', 't', '2018-05-15 21:12:04', '2018-05-15 23:12:03'),
+(176, NULL, NULL, NULL, '43', 'y', '2018-05-15 21:12:39', '2018-05-15 23:12:38'),
+(177, NULL, NULL, NULL, '43', 'u', '2018-05-15 21:12:56', '2018-05-15 23:12:56'),
+(178, NULL, NULL, NULL, '43', 'i', '2018-05-15 21:14:09', '2018-05-15 23:14:08'),
+(179, NULL, NULL, NULL, '43', 'dz', '2018-05-15 21:14:58', '2018-05-15 23:14:58'),
+(180, NULL, NULL, NULL, '43', 'dz', '2018-05-15 21:15:46', '2018-05-15 23:15:45'),
+(181, NULL, NULL, NULL, '43', 'dzdzdzdz', '2018-05-15 21:15:54', '2018-05-15 23:15:53'),
+(182, NULL, NULL, NULL, '43', 'WHatr\'atvydz&ugrave;d*', '2018-05-15 21:19:59', '2018-05-15 23:19:59'),
+(183, NULL, NULL, NULL, '43', 'WHatr\'atvydz&ugrave;d*', '2018-05-15 21:20:00', '2018-05-15 23:20:00'),
+(184, NULL, NULL, NULL, '43', '&egrave;&egrave;', '2018-05-15 21:21:09', '2018-05-15 23:21:08'),
+(185, NULL, NULL, NULL, '43', 'dzdz', '2018-05-15 21:21:40', '2018-05-15 23:21:40'),
+(186, NULL, NULL, NULL, '43', 'pppp', '2018-05-15 21:22:30', '2018-05-15 23:22:30'),
+(187, NULL, NULL, NULL, '43', 'jj', '2018-05-15 21:23:04', '2018-05-15 23:23:03'),
+(188, NULL, NULL, NULL, '43', 'ooo', '2018-05-15 21:23:55', '2018-05-15 23:23:55'),
+(189, NULL, NULL, NULL, '43', 'dz', '2018-05-15 21:25:07', '2018-05-15 23:25:07'),
+(190, NULL, NULL, NULL, '43', 'dzdzdz', '2018-05-15 21:25:13', '2018-05-15 23:25:12'),
+(191, 1, 43, NULL, '43', 'WHatr\'atvydz&ugrave;d*', '2018-05-15 21:19:59', '2018-05-15 23:25:30'),
+(192, NULL, NULL, NULL, '43', 'Hey what\'s up guys \n', '2018-05-15 21:29:51', '2018-05-15 23:29:51'),
+(193, 1, 43, NULL, '43', 'Hey what\'s up guys \n', '2018-05-15 21:29:51', '2018-05-15 23:30:03'),
+(194, NULL, NULL, NULL, '43', 'dzdzdzdzdz', '2018-05-15 21:40:58', '2018-05-15 23:40:58'),
+(235, NULL, NULL, NULL, '1', 'ahhhh', '2018-05-16 20:33:59', '2018-05-16 20:33:59'),
+(236, NULL, NULL, NULL, '1', 'bbbbbb', '2018-05-16 20:39:05', '2018-05-16 20:39:05'),
+(226, NULL, NULL, NULL, '47', 'what\'up\n', '2018-05-16 12:39:43', '2018-05-16 14:39:41'),
+(228, NULL, NULL, NULL, '47', 'zdzdzd', '2018-05-16 13:04:19', '2018-05-16 15:04:18'),
+(229, NULL, NULL, NULL, '1', 'On va test la nouvelle version', '2018-05-16 15:09:20', '2018-05-16 15:09:20'),
+(230, NULL, NULL, NULL, '48', 'muh dick', '2018-05-16 17:34:53', '2018-05-16 17:34:53'),
+(231, NULL, NULL, NULL, '48', '&lt;hr&gt;', '2018-05-16 17:40:15', '2018-05-16 17:40:15'),
+(232, NULL, NULL, NULL, '48', 'aaaa', '2018-05-16 17:40:26', '2018-05-16 17:40:26'),
+(233, NULL, NULL, NULL, '57', 'What\'s up boyys', '2018-05-16 20:29:00', '2018-05-16 20:29:00'),
+(238, NULL, NULL, NULL, '1', 'vvvvv', '2018-05-16 20:44:18', '2018-05-16 20:44:18'),
+(240, NULL, NULL, NULL, '1', 'azeazeazeaze', '2018-05-16 20:51:23', '2018-05-16 20:51:23'),
+(241, NULL, NULL, NULL, '1', 'gzeagazeraz', '2018-05-16 21:06:21', '2018-05-16 21:06:21');
 
 -- --------------------------------------------------------
 
@@ -252,7 +293,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `last_login`, `pp_url`) VALUES
-(1, 'neilrichter', 'me@neilrichter.com', '$2y$10$HO4udjih73QNgiVmyfUIJe1CRQTvuOy/soVggyvKyoV/mRXsKbUjy', '2018-05-15 19:26:13', '/assets/pp/PP-Pro.jpg'),
+(1, 'neilrichter', 'me@neilrichter.com', '$2y$10$HO4udjih73QNgiVmyfUIJe1CRQTvuOy/soVggyvKyoV/mRXsKbUjy', '2018-05-16 19:22:50', '/assets/pp/PP-Pro.jpg'),
 (2, 'test', 'aaa@aaaa.fr', '$2y$10$tDR6nlAg0pjPw7QsFp1GUuHZAwNx4pn3br4v41WhavIh0FwI7KoHu', '2018-05-08 22:03:17', NULL),
 (3, 'Louis', 'loiseaubillon@gmail.com', '$2y$10$kFi4hOlekcvhIP2nN7bDcOYm71og.zDT6nocFKgdra6N6Li59uWZW', '2018-05-11 09:59:37', '/assets/pp/r6-operator-buck_237593.png'),
 (4, 'Krozakof', 'blabla@yopmail.fr', '$2y$10$SqvwW1IKtHEWk0z4RE0CX.Namv2mvp1HRP5UNrHgP.FmsMzr2B1Ta', '2018-05-09 12:30:54', '/assets/pp/4_pp.jpeg'),
@@ -267,7 +308,18 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `last_login`, `pp_url`) 
 (41, 'ddzdzdz', 'd@do.dd', '$2y$10$TiEJzRHFhmXjpZA4Rdw3xeYaLcMAD1GwsLo14bo2nPxTZoTwVOvt.', '2018-05-13 17:03:52', NULL),
 (35, 'yuyuyu', 'yu@yu.fr', '$2y$10$NyM1hblukymSH2UjM10pguTJ6c6P/592SmG1C484/ASHl/vNlVm7K', '2018-05-12 14:29:40', NULL),
 (25, 'Wood', 'wasb95@hotmail.fr', '$2y$10$VfCGiW0X2Mmrgw42Um0e..tYjbqcM6ILlpJgRZTYPSUry56gPjheC', '2018-05-12 12:44:56', NULL),
-(43, 'line', 'line@line.fr', '$2y$10$ZMIfYlCvM9u4HMWyU8wdOuClUHBkV1LDvHf8tnv/oeTsyn/r8bhea', '2018-05-15 10:22:37', '/assets/pp/discor.png');
+(43, 'line', 'line@line.fr', '$2y$10$ZMIfYlCvM9u4HMWyU8wdOuClUHBkV1LDvHf8tnv/oeTsyn/r8bhea', '2018-05-16 16:30:31', '/assets/pp/discor.png'),
+(48, '3-25', 'tusaispascoder@xnuance.fr', '$2y$10$6inxHRBU7BrMYN1APeX7aeGqEuw.1aH08aZvCZPCqA5RZYnCU9ASG', '2018-05-16 15:34:13', NULL),
+(47, 'zya', 'zya1999@hotmail.fr', '$2y$10$.VgZsbvQ6esW0RcrFSdJDeaAXJNw.pvVcMkGt3lW3a9CcV2/4MbeO', '2018-05-16 10:34:19', NULL),
+(49, 'Testtest', 'test@test.frf', '$2y$10$5QBPiTOq6cYPl6yJyG8eKu04vqFtJeKAMmd0kP.lwF7khD7Z6Xd3i', '2018-05-16 16:33:57', NULL),
+(50, '', '', '$2y$10$TcrAmoaNoX8vOT7GDp23TeQQtVJV7zZa2B/gCjtuf8DGPuLPr/3qG', '2018-05-16 18:09:19', NULL),
+(51, 'azeaze', 'azeazea@ne', '$2y$10$sCdu1vrbcVnpFaakU1hQHuoUx7EEfV8BoXUl00T0UjVNkFSOcLdH6', '2018-05-16 17:42:48', NULL),
+(52, 'azeaz', 'azeazeaze@azeaze.azeae', '$2y$10$/1IOnGmk.2Ke2SsSrFOW9.ArOdCGgqC98UWoDCpIWOxnoamlCZWqm', '2018-05-16 17:50:40', NULL),
+(53, 'aze', 'me@neilrichter.comm', '$2y$10$wNeERwwaW9XRks.nSWxvr.osOg16V1t51le4YldMu2UvsOkt9smwy', '2018-05-16 17:58:33', NULL),
+(54, 'azea', 'azeazeaze@azeaze.aaze', '$2y$10$NMCwIC.J4xY.SRU8JezkDeCVFYEIHJKqgvWZMnsXVv13pDSdGJy3G', '2018-05-16 18:00:25', NULL),
+(55, 'azeaaa', 'azeazeaze@azeaze.azea', '$2y$10$MzfgWk5hUyXt8NcGz4PoleIw/wpOOWnHa35GdhOItGng/Zo8OcDIa', '2018-05-16 18:06:44', NULL),
+(56, 'azeazeazeaze', 'azeazeaaaze@azeaze.aze', '$2y$10$e9hz/jKKAr6EpHC.uIzaVu4LPCrCnguHT.kPHLAp2H0Y4SXexnuXa', '2018-05-16 18:08:21', NULL),
+(57, 'Mohammed Ali', 'mohammedali@gmail.com', '$2y$10$gNB6v8VyUBxfIImlPjXY0.NEQBdLdasA4rrNC6ba9rl6Fm2/Z3bAq', '2018-05-16 18:28:47', NULL);
 
 --
 -- Index pour les tables exportées
@@ -311,7 +363,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `favs`
 --
 ALTER TABLE `favs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT pour la table `follows`
 --
@@ -321,17 +373,17 @@ ALTER TABLE `follows`
 -- AUTO_INCREMENT pour la table `rtwtt`
 --
 ALTER TABLE `rtwtt`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 --
 -- AUTO_INCREMENT pour la table `twtts`
 --
 ALTER TABLE `twtts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=245;
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
