@@ -53,7 +53,12 @@ class TwttsManager
     {
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
-        $request = $pdo->query("SELECT * FROM `twtts` WHERE twtts.content = '$content' AND twtts.rt = 1 AND twtts.rt_author = $rt_author");
+        $request = $pdo->prepare("SELECT * FROM `twtts` WHERE twtts.content = :content AND twtts.rt = 1 AND twtts.rt_author = :rt_author");
+        $request->bindParam(':content', $content);
+        $request->bindParam(':rt_author', $rt_author);
+
+        $request->execute();
+        
         return $request->fetch(\PDO::FETCH_ASSOC);
     }
 
@@ -201,5 +206,26 @@ class TwttsManager
                 'action' => 'undo'
             ]);
         }
+    }
+
+    public function getUserLastTwtt ($id)
+    {
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        
+        $last_twtt = $pdo->prepare("SELECT twtts.*, users.name AS author_name, users.pp_url FROM twtts LEFT JOIN users ON users.id = twtts.author WHERE twtts.author = $id ORDER BY `twtts`.`date` DESC");
+
+        $last_twtt->execute([$id]);
+        
+        $twtt = $last_twtt->fetch(\PDO::FETCH_ASSOC);
+
+        $id = $twtt['id'];
+        $twtt['favs'] = $this->getFavs($id);
+        $twtt['rtwtts'] = $this->getRtwtts($id);
+        $twtt['rtwtted'] = $this->isRT($id, $_SESSION['id']) ? true : false;
+        $twtt['faved'] = $this->isFav($id, $_SESSION['id']) ? true : false;
+
+        return $twtt;
     }
 }

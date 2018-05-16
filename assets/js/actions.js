@@ -63,10 +63,7 @@ window.addEventListener('load', () => {
             var first = nodes[0];
             var last_date = nodes[nodes.length- 1].dataset.last;
 
-            console.log(last_date);
-
             loadMoreData(last_date);
-
         }
 
     });

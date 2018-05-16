@@ -13,11 +13,22 @@ class TwttsController extends BaseController
             header('Location: /login');
             exit();
         }
-        if (!empty($_POST['twtt-content'])) {
+
+        $data = json_decode(file_get_contents('php://input'));
+        if (isset($data->content)) {
             $manager = new TwttsManager;
-            $manager->setTwtt($_SESSION['id'], $_POST['twtt-content']);
-            header('Location: /home');
-            exit();
+            $manager->setTwtt($_SESSION['id'], htmlentities($data->content));
+            $last_twtt = $manager->getUserLastTwtt($_SESSION['id']);
+
+            $data = [
+                'last_twtt' => $last_twtt,
+                'user'  => $_SESSION,
+            ];
+            
+            return json_encode([
+                'status' => true,
+                'html' => $this->render('twtt.html.twig', $data),
+                ]);
         }
     }
 

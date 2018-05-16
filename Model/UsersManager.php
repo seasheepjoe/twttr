@@ -11,18 +11,7 @@ class UsersManager {
         $errors = [];
         $sendForm = true;
 
-        if (strlen($username) <= 2 || strlen($username) > 25) {
-            $errors['username'] = 'Le nom d\'utilisateur doit faire entre 3 et 25 charactères';
-            $sendForm = false;
-        }
-
-        if (strlen($password) <= 5 || strlen($password) > 15) {
-            $errors['password'] = 'Le mot de passe doit faire entre 6 et 25 charactères';
-            $sendForm = false;
-        }
-
         if ($password !== $password_repeat) {
-            $errors['password_repeat'] = 'Veuillez taper le même mot de passe';
             $sendForm = false;
         }
 
@@ -44,18 +33,22 @@ class UsersManager {
         $username_taken = $is_username_taken->fetch();
         if ($isEmailUsed['email'] === $email) {
             $errors['email'] = 'You already have an account';
+            $errors['status'] = false;
             $sendForm = false;
         }
 
         if ($username_taken['name'] === $username) {
             $errors['username'] = 'This username is already taken';
+            $errors['status'] = false;
             $sendForm = false;
         }
 
         if ($sendForm === true) {
+            $errors['status'] = true;
             $request->execute();
             file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $username . " registered on twttr !\n", FILE_APPEND);
             self::login($email, $password);
+            return $errors;
         }else {
             return $errors;
         }
@@ -69,7 +62,8 @@ class UsersManager {
         $request = $pdo->query("SELECT * FROM `users` WHERE `email` ='" . $email . "'");
         $data = $request->fetch(\PDO::FETCH_ASSOC);
         if (empty($data)) {
-            $errors['error'] = 'Invalid email or password';
+            $errors['email'] = 'Invalid email';
+            $errors['status'] = false;
             return $errors;
         }else {
             if (password_verify($password, $data['password'])) {
@@ -78,9 +72,11 @@ class UsersManager {
                 $update_last_login = $pdo->query("UPDATE `users` SET `last_login` = NOW() WHERE `id` = '" . $id . "'");
                 header('Location: /');
                 file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['name'] . " registered on twttr !\n", FILE_APPEND);
-                exit();
+                $errors['status'] = true;
+                return $errors;
             } else {
-                $errors['error'] = 'Invalid email or password';
+                $errors['password'] = 'Invalid password';
+                $errors['status'] = false;
                 return $errors;
             }
         }   

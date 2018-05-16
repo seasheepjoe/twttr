@@ -15,19 +15,19 @@ class UsersController extends BaseController
             header('Location: /');
             exit();
         } else {
-            $data = [];
-            if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password-repeat'])) {
-                $username = htmlentities($_POST['username']);
-                $email = htmlentities($_POST['email']);
-                $password = htmlentities($_POST['password']);
-                $password_repeat = htmlentities($_POST['password-repeat']);
+            $data = json_decode(file_get_contents('php://input'));
+            if (!empty($data) && isset($data->name) && isset($data->email) && isset($data->password) && isset($data->passwordRepeat)) {
+                $username = htmlentities($data->name);
+                $email = htmlentities($data->email);
+                $password = htmlentities($data->password);
+                $password_repeat = htmlentities($data->passwordRepeat);
                 $users_manager = new UsersManager();
-                $errors = $users_manager->register($username, $email, $password, $password_repeat);
-                $data = [
-                    'errors' => $errors,
-                ];
+                $errors = $users_manager->register($username, $email, $password, $password_repeat);  
+
+                return json_encode($errors);
             }
-            return $this->render('register.html.twig', $data);
+
+            return $this->render('register.html.twig');
         }
     }
 
@@ -37,17 +37,17 @@ class UsersController extends BaseController
             header('Location: /');
             exit();
         } else {
-            $data = [];
-            if (isset($_POST['email']) && isset($_POST['password'])) {
-                $email = htmlentities($_POST['email']);
-                $password = htmlentities($_POST['password']);
+            $data = json_decode(file_get_contents('php://input'));
+            if (!empty($data) && isset($data->email) && isset($data->password)) {
+                $email = htmlentities($data->email);
+                $password = htmlentities($data->password);
                 $account_manager = new UsersManager();
                 $errors = $account_manager->login($email, $password);
-                $data = [
-                    'errors' => $errors,
-                ];
+
+                return json_encode($errors);
             }
-            return $this->render('login.html.twig', $data);
+
+            return $this->render('login.html.twig');
         }
     }
 
