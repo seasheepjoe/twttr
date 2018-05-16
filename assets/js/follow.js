@@ -23,6 +23,6 @@ window.addEventListener('load', () => {
 const updateDOM = (response) => {
     document.querySelector('button[name="follow"]').innerHTML = response.text;
     document.querySelector('form[name="follow"]').action = response.target;
-    document.querySelector('#user-followers').innerHTML = response.followers;
-    document.querySelector('#user-following').innerHTML = response.followings;
+    document.querySelector('h5[name="user-followers"]').innerHTML = response.followers;
+    document.querySelector('h5[name="user-following"]').innerHTML = response.followings;
 }
